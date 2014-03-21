@@ -31,9 +31,9 @@ SyntaxSymbol* SymbolManager::randomSymbolWithMaxType(int maxTypes) {
     newSymbol->setScaleX(newSymbol->getScaleX()*dScaleX);
     newSymbol->setScaleY(newSymbol->getScaleY()*dScaleY);
     
-    int k = arc4random() % 4;
+//    int k = arc4random() % 4;
     int i = 0;
-    int l = 0;
+//    int l = 0;
     
 //    switch (k) {
 //        case 0:
@@ -104,32 +104,7 @@ SyntaxSymbol* SymbolManager::randomSymbolWithMaxType(int maxTypes) {
     i = arc4random() % maxTypes;
     sprintf(file, "symbol%d-idle0@2x.png" , i);
     
-    switch (i) {
-        case 0:
-            CCLOG("blue");
-            
-            break;
-        case 1:
-            CCLOG("orange");
-            
-            break;
-        case 2:
-            CCLOG("green");
-            
-            break;
-        case 3:
-            CCLOG("brown");
-            
-            break;
-        case 4:
-            CCLOG("yellow");
-            
-            break;
-        case 5:
-            CCLOG("red");
-            
-            break;
-    }
+    CCLOG("%s",file);
     
     newSymbol->initWithFile(file);
 
@@ -356,6 +331,8 @@ void SymbolManager:: shiftSymbol(SyntaxSymbol* thisSymbol ,int thisType) {
     thisSymbol->isOfType = thisType;
      if (!thisSymbol->isShifter) {
         thisSymbol->initWithFile(file);
+         animIdleSysmbol(thisSymbol);
+         
 //        if (thisType == 9) {
 //            thisSymbol->isKeepable = true;
 //            thisSymbol->initWithFile("symbol9b@2x.png");
@@ -428,6 +405,8 @@ void SymbolManager::animIdleSysmbol(SyntaxSymbol *thisSymbol){
     for (int i = 0; i < anim_idle_frames; i++) {
         char file[0x50] = {0};
         sprintf(file, "symbol%d-idle%d@2x.png" , thisSymbol->isOfType, i);
+        CCLOG("%s",file);
+
         temp->addSpriteFrameWithFileName(file);
     }
     
@@ -450,6 +429,7 @@ void SymbolManager:: animHideSymbol(SyntaxSymbol *thisSymbol,float thisDelay) {
     for (int i = 0; i < anim_clear_frames; i++) {
         char file[0x50] = {0};
         sprintf(file, "symbol%d-clear%d@2x.png" , thisSymbol->isOfType, i);
+
         temp->addSpriteFrameWithFileName(file);
     }
     

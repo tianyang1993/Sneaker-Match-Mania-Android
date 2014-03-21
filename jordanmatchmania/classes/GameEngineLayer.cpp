@@ -335,6 +335,9 @@ void GameEngine::populateGameField(){
     for (int i = 0; i < gameScene->m_nRowsNeedForLevel; i++) {
         CCArray* temp = new CCArray();
         for (int j = 0; j < gameScene->m_nRowsNeedForLevel; j++) {
+            
+            CCLOG("--------------------------------------");
+            
             bool isSymbolLoaded = true;
             SyntaxSymbol *symbol = NULL;
             if (!symbol)
@@ -364,7 +367,6 @@ void GameEngine::populateGameField(){
                     firstTouchedSymbol = symbol;
                     firstTouchPos = firstTouchedSymbol->getPosition();
                     makeBox(symbol);
-                    
                 }
             }
             
