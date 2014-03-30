@@ -163,6 +163,7 @@ void GameScene:: initGameInfo(){
 //    allPopUps = new CCArray();
     
    
+    m_nRowsNeedForLevel = gameSettings->getGameRows();
     m_nGameScore        = gameSettings->getGameScore();
     m_nGameTotalScore   = gameSettings->getTotalGameScore();
     m_nGameMode         = gameSettings->getGameMode();
