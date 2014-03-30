@@ -1,0 +1,449 @@
+//
+//  MoreLayer.cpp
+//  VivaStampede
+//
+//  Created by Mikhail Berrya on 11/25/13.
+//
+//
+
+#include "MoreLayer.h"
+#include "MainView.h"
+#include "GameSetting.h"
+#include "HowToPlayScene.h"
+#include "SimpleAudioEngine.h"
+#include "RevMob/RevMob.h"
+#include "AnalyticX.h"
+ 
+ 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "ObjCCalls/ObjCCalls.h"
+#endif
+ 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "JNICalls/InterfaceJNI.h"
+#endif
+
+
+static MoreScene * mytry = NULL;
+
+CCScene* MoreScene::scene(){
+    
+    CCScene* scene = CCScene::create();
+    MoreScene* layer = MoreScene::create();
+    scene->addChild(layer);
+    return scene;
+}
+
+MoreScene* MoreScene::get_instance()
+{
+    return mytry;
+}
+
+bool MoreScene::init(){
+    
+    mytry = this;
+    if (!CCLayer::init()) {
+        return false;
+    }
+    
+    size = CCDirector::sharedDirector()->getWinSize();
+    double dScaleX = size.width / 768 , dScaleY = size.height / 1024;
+    this->setTouchEnabled(true);
+    gameSettings = GameSettings::sharedGameSettings();
+    ChartboostX::sharedChartboostX()->setDelegate(this);
+    
+       
+    
+    setBackGroundView(gameSettings->getBackground());    
+    CCMenuItemFont::setFontSize(45*dScaleX);
+    
+    ccColor3B strokeColor       =  { 255, 255, 255 };
+    ccFontDefinition strokeTextDef;
+    strokeTextDef.m_fontSize = 50*dScaleX;
+    strokeTextDef.m_fontName = std::string("Dimbo Regular");
+    strokeTextDef.m_stroke.m_strokeColor   = strokeColor;
+    strokeTextDef.m_stroke.m_strokeEnabled = true;
+    strokeTextDef.m_stroke.m_strokeSize    = 2.0f;
+    strokeTextDef.m_alignment = kCCTextAlignmentCenter;
+
+    //GetFreeApp Button
+    getFreeAppButton = CCMenuItemImage::create("symbol1@2x.png", "symbol1@2x.png", this, menu_selector(MoreScene::onFreeApp));
+    getFreeAppButton->setPosition(ccp(size.width / 2 - 200* dScaleX , 900*dScaleY));
+    getFreeAppButton->setScaleX(getFreeAppButton->getScaleX()* dScaleX);
+    getFreeAppButton->setScaleY(getFreeAppButton->getScaleY()* dScaleY);
+    
+    
+    CCLabelTTF* getFreeApp = CCLabelTTF::createWithFontDefinition("Get a Free App", strokeTextDef);
+    getFreeApp->setScaleX(getFreeApp->getScaleX()*0.8f);
+    getFreeApp->setScaleY(getFreeApp->getScaleY()*1.0f);
+    
+    getFreeAppLabel = CCMenuItemLabel::create(getFreeApp, this, menu_selector(MoreScene::onFreeApp));
+    getFreeAppLabel->setPosition(ccp(size.width / 2 - 190* dScaleX , 800*dScaleY));
+    getFreeAppLabel->setColor(ccGRAY);
+    
+
+
+    // Rate App Button
+    rateLabelButton = CCMenuItemImage::create("symbol9@2x.png", "symbol9@2x.png", this, menu_selector(MoreScene::onRateLabel));
+    rateLabelButton->setPosition(ccp(size.width / 2 +200* dScaleX , 900*dScaleY));
+    rateLabelButton->setScaleX(rateLabelButton->getScaleX()* dScaleX);
+    rateLabelButton->setScaleY(rateLabelButton->getScaleY()* dScaleY);
+    
+    CCLabelTTF* rate = CCLabelTTF::createWithFontDefinition("Rate on App Store", strokeTextDef);
+    rate->setScaleX(rate->getScaleX()*0.8f);
+    rate->setScaleY(rate->getScaleY()*1.0f);
+    
+    rateLabel = CCMenuItemLabel::create(rate, this, menu_selector(MoreScene::onRateLabel));
+    rateLabel->setPosition(ccp(size.width / 2 + 250* dScaleX , 800*dScaleY));
+    rateLabel->setColor(ccGRAY);
+
+    // Top Scores
+    topScoresLabelButton = CCMenuItemImage::create("symbol3@2x.png", "symbol3@2x.png", this, menu_selector(MoreScene::onTopScore));
+    topScoresLabelButton->setPosition(ccp(size.width / 2 -200* dScaleX , 700*dScaleY));
+    topScoresLabelButton->setScaleX(topScoresLabelButton->getScaleX()* dScaleX);
+    topScoresLabelButton->setScaleY(topScoresLabelButton->getScaleY()* dScaleY);
+    
+    CCLabelTTF* top = CCLabelTTF::createWithFontDefinition("Top Scores", strokeTextDef);
+    top->setScaleX(top->getScaleX()*0.8f);
+    top->setScaleY(top->getScaleY()*1.0f);
+    
+    topScoresLabel = CCMenuItemLabel::create(top, this, menu_selector(MoreScene::onTopScore));
+    topScoresLabel->setPosition(ccp(size.width / 2 - 180* dScaleX , 600*dScaleY));
+    topScoresLabel->setColor(ccGRAY);
+    
+    // How To Play
+    
+    infoLabelButton = CCMenuItemImage::create("symbol2@2x.png", "symbol2@2x.png", this, menu_selector(MoreScene::onHowToPlay));
+    infoLabelButton->setPosition(ccp(size.width / 2 +200* dScaleX , 700*dScaleY));
+    infoLabelButton->setScaleX(infoLabelButton->getScaleX()* dScaleX);
+    infoLabelButton->setScaleY(infoLabelButton->getScaleY()* dScaleY);
+    
+    
+    CCLabelTTF* info = CCLabelTTF::createWithFontDefinition("How to Play", strokeTextDef);
+    info->setScaleX(info->getScaleX()*0.8f);
+    info->setScaleY(info->getScaleY()*1.0f);
+    
+    infoLabel = CCMenuItemLabel::create(info, this, menu_selector(MoreScene::onHowToPlay));
+    infoLabel->setPosition(ccp(size.width / 2 + 230* dScaleX , 600*dScaleY));
+    infoLabel->setColor(ccGRAY);
+
+    // More Apps
+    
+    moreAppsLabelButton = CCMenuItemImage::create("symbol0@2x.png", "symbol0@2x.png", this, menu_selector(MoreScene::onMoreApp));
+    moreAppsLabelButton->setPosition(ccp(size.width / 2 -200* dScaleX , 500*dScaleY));
+    moreAppsLabelButton->setScaleX(moreAppsLabelButton->getScaleX()* dScaleX);
+    moreAppsLabelButton->setScaleY(moreAppsLabelButton->getScaleY()* dScaleY);
+    
+    
+    CCLabelTTF* more = CCLabelTTF::createWithFontDefinition("More Apps", strokeTextDef);
+    more->setScaleX(info->getScaleX()*0.8f);
+    more->setScaleY(info->getScaleY()*1.0f);
+    
+    moreAppsLabel = CCMenuItemLabel::create(more, this, menu_selector(MoreScene::onMoreApp));
+    moreAppsLabel->setPosition(ccp(size.width / 2 - 170* dScaleX , 400*dScaleY));
+    moreAppsLabel->setColor(ccGRAY);
+
+    
+    // Share
+    
+    shareLabelButton = CCMenuItemImage::create("symbol5@2x.png", "symbol5@2x.png", this, menu_selector(MoreScene::onShare));
+    shareLabelButton->setPosition(ccp(size.width / 2 -200* dScaleX , 300*dScaleY));
+    shareLabelButton->setScaleX(shareLabelButton->getScaleX()* dScaleX);
+    shareLabelButton->setScaleY(shareLabelButton->getScaleY()* dScaleY);
+    
+    CCLabelTTF* share = CCLabelTTF::createWithFontDefinition("Tell a Friend", strokeTextDef);
+    share->setScaleX(share->getScaleX()*0.8f);
+    share->setScaleY(share->getScaleY()*1.0f);
+    
+    shareLabel = CCMenuItemLabel::create(share, this, menu_selector(MoreScene::onShare));
+    shareLabel->setPosition(ccp(size.width / 2 - 170* dScaleX , 200*dScaleY));
+    shareLabel->setColor(ccGRAY);
+
+        
+    
+    // Email Support
+    emailSupportLabelButton = CCMenuItemImage::create("symbol4@2x.png", "symbol4@2x.png", this, menu_selector(MoreScene::onEmail));
+    emailSupportLabelButton->setPosition(ccp(size.width / 2 +200* dScaleX , 500*dScaleY));
+    emailSupportLabelButton->setScaleX(emailSupportLabelButton->getScaleX()* dScaleX);
+    emailSupportLabelButton->setScaleY(emailSupportLabelButton->getScaleY()* dScaleY);
+    
+    CCLabelTTF* email = CCLabelTTF::createWithFontDefinition("Email Support", strokeTextDef);
+    email->setScaleX(email->getScaleX()*0.8f);
+    email->setScaleY(email->getScaleY()*1.0f);
+    
+    emailSupportLabel = CCMenuItemLabel::create(email, this, menu_selector(MoreScene::onEmail));
+    emailSupportLabel->setPosition(ccp(size.width / 2 + 210* dScaleX , 400*dScaleY));
+    emailSupportLabel->setColor(ccGRAY);
+
+    //    PHNotificationView *notifView=[[[PHNotificationView alloc] initWithApp:kPlayHavenID
+    //                                                                    secret:kPlayHeavenSecret
+    //                                                                 placement:@"more_games"] autorelease];
+    //    [moreAppsLabelButton addSubview:notifView];
+    //    notifView.center=CGPointMake(0, 10);
+    //    notifView.tag=playhavenNotificationViewTag;
+    //    [notifView refresh];
+    
+    
+    //    if(![[NSUserDefaults standardUserDefaults] boolForKey:IAP_FULL_VERSION]) {
+    // Buy Ad Free Version
+    buyAdFreeVersionButton = CCMenuItemImage::create("RedXButton@2x.png", "RedXButton@2x.png", this, menu_selector(MoreScene::onByAdFree));
+    buyAdFreeVersionButton->setPosition(ccp(size.width / 2 +200* dScaleX , 300*dScaleY));
+    buyAdFreeVersionButton->setScaleX(moreAppsLabelButton->getScaleX()* dScaleX);
+    buyAdFreeVersionButton->setScaleY(moreAppsLabelButton->getScaleY()* dScaleY);
+    
+    
+    CCLabelTTF* burfree = CCLabelTTF::createWithFontDefinition("Ad Free Version", strokeTextDef);
+    burfree->setScaleX(burfree->getScaleX()*0.8f);
+    burfree->setScaleY(burfree->getScaleY()*1.0f);
+    
+    buyAdFreeVersion = CCMenuItemLabel::create(burfree, this, menu_selector(MoreScene::onByAdFree));
+    buyAdFreeVersion->setPosition(ccp(size.width / 2 + 230* dScaleX , 200*dScaleY));
+    buyAdFreeVersion->setColor(ccGRAY);
+    
+    //    }
+    //    else {
+    //        shareLabel.center = CGPointMake(160, 360);
+    //        shareLabelButton.frame = CGRectMake(140, 300, 40, 40.0);
+    //    }
+    
+    
+    CCLabelTTF* backlabel = CCLabelTTF::createWithFontDefinition("<< BACK TO MENU", strokeTextDef);
+    backlabel->setScaleX(backlabel->getScaleX()*1.0f);
+    backlabel->setScaleY(backlabel->getScaleY()*1.2f);
+    
+    backToMenuButton = CCMenuItemLabel::create(backlabel, this, menu_selector(MoreScene::onBack));
+    backToMenuButton->setPosition(ccp(size.width / 2, 100*dScaleY));
+    backToMenuButton->setColor(ccGRAY);
+
+ 
+    CCMenu* menu = CCMenu::create(getFreeAppButton,getFreeAppLabel,
+                                  rateLabelButton,rateLabel ,
+                                  topScoresLabelButton , topScoresLabel,
+                                  infoLabelButton,infoLabel,
+                                  moreAppsLabelButton , moreAppsLabel,
+                                  shareLabelButton , shareLabel,
+                                  emailSupportLabelButton , emailSupportLabel,
+                                  buyAdFreeVersionButton,buyAdFreeVersion,backToMenuButton,  NULL);
+    menu->setPosition(CCPointZero);
+    addChild(menu,2);
+    
+    
+    
+    return true;
+}
+
+
+void MoreScene:: setBackGroundView(int nType){
+    
+    char file[0x90] = {0};
+    switch (nType) {
+        case 0:
+            sprintf(file, "background@2x.png");
+            break;
+        case 1:
+            sprintf(file, "iapbackground1@2x.png");
+            break;
+        case 2:
+            sprintf(file, "iapbackground2@2x.png");
+            break;
+        case 3:
+            sprintf(file, "iapbackground3@2x.png");
+            break;
+        case 4:
+            sprintf(file, "iapbackground4@2x.png");
+            break;
+            
+        default:
+            break;
+    }
+    
+    CCSprite* backgroundView = CCSprite::create(file);
+    backgroundView->setScaleX(size.width / backgroundView->getContentSize().width);
+    backgroundView->setScaleY(size.height / backgroundView->getContentSize().height);
+    backgroundView->setPosition(ccp(size.width / 2, size.height / 2));
+    addChild(backgroundView);
+    
+    
+}
+
+void MoreScene:: onHowToPlay(cocos2d::CCObject *pSender){
+    
+    gameSettings->setMoreToHowToPlayerScene(5);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, HowToPlayScene::scene()));
+}
+
+void MoreScene::onByAdFree(CCObject *pSender){
+    
+    CCLOG("ByAdFree");
+    AnalyticX::flurryLogEvent("ByAd Free");
+}
+
+void MoreScene::onEmail(CCObject *pSender){
+    
+    CCLOG("Email");
+    char score[0x60] = {0};
+    sprintf(score, "%d" , gameSettings->getGameScore());
+
+    if (this->tryIsInternetConnection())
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		InterfaceJNI::postMessageEMailSupport();
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        ObjCCalls::trySendAnEMail((char*)score,true);
+#endif
+    }
+    else
+    {
+        this->updateMessageLabel("No internet connection to send an email");
+    }
+}
+void MoreScene:: onFreeApp(CCObject *pSender){
+    
+    CCLOG("FreeApp");
+    AnalyticX::flurryLogEvent("Free App");
+    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+    revmob->ShowPopup();
+     
+}
+void MoreScene:: onInfo(CCObject *pSender){
+    
+    CCLOG("Info");
+    AnalyticX::flurryLogEvent("ByAd Free");
+}
+
+void MoreScene:: onMoreApp(CCObject *pSender){
+    CCLOG("MoreApp");
+//    ChartboostX::sharedChartboostX()->showMoreApps();
+//    ChartboostX::sharedChartboostX()->cacheMoreApps();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	InterfaceJNI::showMoreApp();	
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+     ;
+#endif
+}
+
+void MoreScene:: onRateLabel(CCObject *pSender){
+    
+    CCLOG("RateLabel");
+}
+
+void MoreScene:: onShare(cocos2d::CCObject *pSender){
+     
+    char score[0x60] = {0};
+    sprintf(score, "%d" , gameSettings->getGameScore());
+
+    if (this->tryIsInternetConnection())
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		InterfaceJNI::postMessageEMail();
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        ObjCCalls::trySendAnEMail((char*)score,true);
+#endif
+    }
+    else
+    {
+        this->updateMessageLabel("No internet connection to send an email");
+    }
+
+}
+
+void MoreScene:: onTopScore(CCObject *pSender){
+    
+
+}
+
+void MoreScene:: onBack(CCObject *pSender){
+    gameSettings->setCurrentStatus(kTagMore);
+     
+    CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, MainView::scene()));
+    
+    
+}
+
+#pragma mark - Email Sender
+///\/\/\/\/\/\/\//\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\//\/\/\/\/\/\/\//\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/
+
+void MoreScene::trySendAnEmail(CCObject* pSender)
+{
+    char score[0x60] = {0};
+    sprintf(score, "%d" , gameSettings->getGameScore());
+    if (this->tryIsInternetConnection()) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        InterfaceJNI::postMessageEMail();
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        ObjCCalls::trySendAnEMail((char*)score,false);
+#endif
+    }
+    else{
+        this->updateMessageLabel("No internet connection to send an email");
+    }
+}
+
+void MoreScene::trySendAnEmailInApp(CCObject* pSender)
+{
+	char score[0x60] = {0};
+    sprintf(score, "%d" , gameSettings->getGameScore());
+    
+    if (this->tryIsInternetConnection())
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    	// Making...
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        ObjCCalls::trySendAnEMail((char*)score,true);
+#endif
+    }
+    else
+    {
+        this->updateMessageLabel("No internet connection to send an email");
+    }
+}
+
+void MoreScene::updateMessageLabel(const char *text)
+{
+    return;
+}
+
+bool MoreScene::tryIsInternetConnection()
+{
+	CCLog("tryIsInternetConnection");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	return InterfaceJNI::isInternetConnected();
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    return ObjCCalls::tryIsInternetConnection();
+#endif
+}
+
+bool MoreScene::shouldDisplayInterstitial(const char* location)
+{
+    CCLog("about to display interstitial at location %s", location);
+    
+    return !m_interstitialShowed;
+}
+
+void MoreScene::didCacheInterstitial(const char* location)
+{
+    CCLog("did cache interstitial at location %s", location);
+}
+
+void MoreScene::didFailToLoadInterstitial(const char* location)
+{
+    CCLog("did fail to load interstitial at location %s", location);
+    
+    
+}
+
+void MoreScene::didCloseInterstitial(const char* location)
+{
+    CCLog("did close interstitial at location %s", location);
+    m_interstitialShowed = true;
+    
+}
+
+void MoreScene::didClickInterstitial(const char* location)
+{
+    CCLog("did click interstitial at location %s", location);
+    m_interstitialShowed = true;
+    
+}
+
+
