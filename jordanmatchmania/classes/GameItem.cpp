@@ -10,6 +10,7 @@
 #import "SymbolManager.h"
 #import "SymbolItem.h"
 #include "StatusManager.h"
+#include "GameSetting.h"
 
 GameItem* GameItem::sharedGameItem(){
  
@@ -20,12 +21,13 @@ GameItem* GameItem::sharedGameItem(){
     
     return temp;
 }
-
  
 void GameItem:: init() {
 	 
+    gameSettings = GameSettings::sharedGameSettings();
+    
     gameGrid = new CCArray();
-    for (int i = 0; i < 8; i++){
+    for (int i = 0; i < gameSettings->getGameRows(); i++){
         CCArray* temp = new CCArray();
         gameGrid->addObject(temp);
     }

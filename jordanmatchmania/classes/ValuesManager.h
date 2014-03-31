@@ -45,6 +45,12 @@ USING_NS_CC;
 #define kPlayMusic1             "PlayMusic1.mp3"
 #define kPlayMusic2             "PlayMusic2.mp3"
 
+#define anim_idle_frames        10
+#define anim_movement_frames    10
+#define anim_glow_frames        10
+#define anim_spark_frames       8
+#define anim_clear_frames       10
+
 //#define USE_TESTFLIGHT //comment it on release
 
 //#ifdef USE_TESTFLIGHT

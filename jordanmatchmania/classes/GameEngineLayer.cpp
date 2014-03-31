@@ -279,6 +279,7 @@ void GameEngine::reshuffle() {
                 symbolToReplace->isIndex = CCPointMake(i, j);
                 symbolToReplace->setPosition(CCPointFromIndex(symbolToReplace->isIndex));
                 temp->replaceObjectAtIndex(j, symbolToReplace);
+                CCLOG("reshuffle type = %d", symbolToReplace->isOfType);
                 gameGrid->replaceObjectAtIndex(i, temp);
                 this->checkIfSymbolNotMakingPattern(symbolToReplace);
                 symbolToReplace->setOpacity(1.0f);
@@ -331,6 +332,7 @@ void GameEngine::populateGameField(){
             symbol->isIndex = CCPointMake(i, j);
             symbol->setPosition(CCPointFromIndex(symbol->isIndex)); 
             temp->addObject(symbol);
+            
             gameGrid->replaceObjectAtIndex(i, temp);
             this->checkIfSymbolNotMakingPattern(symbol);
             symbol->setOpacity(0.0f);
@@ -383,7 +385,8 @@ void GameEngine::populateGameFieldForNextLevel(){
                 this->addChild(symbol);
                 if (symbol->isKeepable) {
                     if (symbol->isExplosive)
-                        symbolManager->animGlowSymbol(symbol);
+                        //symbolManager->animGlowSymbol(symbol);
+                        symbolManager->animSparkSymbol(symbol);
                     else
                         symbolManager->animSuperSymbol(symbol);
                 }
@@ -392,6 +395,8 @@ void GameEngine::populateGameFieldForNextLevel(){
                 SyntaxSymbol *symbolToReplace = symbolManager->randomSymbolWithMaxType(6);
                 symbolToReplace->isIndex = CCPointMake(i, j);
                 symbolToReplace->setPosition(CCPointFromIndex(symbolToReplace->isIndex));
+                CCLOG("populateGameFieldForNextLevel type = %d", symbolToReplace->isOfType);
+
                 temp->replaceObjectAtIndex(j, symbolToReplace);
                 gameGrid->replaceObjectAtIndex(i, temp);
                 this->checkIfSymbolNotMakingPattern(symbolToReplace);
@@ -630,7 +635,7 @@ void GameEngine::eliminateNeightboursOfSymbolAtIndex(CCPoint thisIndex) {
         for (int j = -1; j < 2; j++) {
             m = thisIndex.x + i;
             n = thisIndex.y + j;
-            if ((m > -1) && (m < 8) && (n > -1) && (n < 8)) {
+            if ((m > -1) && (m < gameSettings->getGameRows() - 2) && (n > -1) && (n < gameSettings->getGameRows() - 2)) {
                 CCArray* temp;
                 temp = (CCArray*)gameGrid->objectAtIndex(m);
                 SyntaxSymbol *symbolToAdd =(SyntaxSymbol*)temp->objectAtIndex(n); 
@@ -694,6 +699,8 @@ void GameEngine::eraseSymbols() {
             
             temp = (CCArray*)gameGrid->objectAtIndex(thisSymbol->isIndex.x);
             temp->removeObject(thisSymbol);
+            CCLOG("eraseSymbols type = %d", thisSymbol->isOfType);
+
             gameGrid->replaceObjectAtIndex(thisSymbol->isIndex.x, temp);
             
             if (thisSymbol->isShifter) noOfShifterMatches++;
@@ -749,6 +756,8 @@ void GameEngine::refillGameField(){
                 newSymbol->isIndex = CCPointMake(i, 8+j);
                 this->addChild(newSymbol);
                 temp->addObject(newSymbol);
+                CCLOG("refillGameField type = %d", newSymbol->isOfType);
+
                 gameGrid->replaceObjectAtIndex(i, temp);
             }
         }
@@ -827,6 +836,8 @@ void GameEngine:: newSymbolMake(CCPoint nPos){
     
     temp = (CCArray*)gameGrid->objectAtIndex(nPos.x);
     temp->replaceObjectAtIndex(nPos.y, newSymbol);
+    
+    CCLOG("newSymbolMake type = %d", newSymbol->isOfType);
     gameGrid->replaceObjectAtIndex(nPos.x, temp);
     
     if (k < 6){
@@ -1403,8 +1414,10 @@ bool GameEngine:: possiblePatternFoundForSymbol(SyntaxSymbol *thisSymbol) {
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
 CCPoint GameEngine::CCPointFromIndex(CCPoint thisIndex) {
-   
-    return CCPointMake((50 + (thisIndex.x * 70))*dScaleFactorX, 200*dSclaeFactorY + (40*dSclaeFactorY + (thisIndex.y * 70*dSclaeFactorY)));
+    
+    float xOffset = size.width - gameSettings->getGameRows() * 70;
+    float yOffset = (size.height - gameSettings->getGameRows() * 70)/2;
+    return CCPointMake((xOffset + (thisIndex.x * 70))*dScaleFactorX, 200*dSclaeFactorY + (yOffset*dSclaeFactorY + (thisIndex.y * 70*dSclaeFactorY)));
 }
 void GameEngine::glitch() {
    

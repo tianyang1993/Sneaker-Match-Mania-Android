@@ -11,6 +11,7 @@
 #include "StatusManager.h"
 #include "GameSetting.h"
 #include "GameEngineLayer.h"
+#include "ValuesManager.h"
 
 SymbolManager* SymbolManager::sharedSymbolManager(){
     
@@ -34,66 +35,75 @@ SyntaxSymbol* SymbolManager::randomSymbolWithMaxType(int maxTypes) {
     int i = 0;
     int l = 0;
     
-    switch (k) {
-        case 0:
-            
-            if (wildcardProbability != 0) {
-                l = arc4random() % wildcardProbability;
-            }else{
-                l = arc4random();
-            }
-            
-            if (l == 0) i = 7;
-            else i = arc4random() % maxTypes;
-            break;
-        case 1:
-            
-            if (shifterProbability != 0) {
-                l = arc4random() % shifterProbability;
-            }else{
-                l = arc4random();
-            }
-            
-            if (l == 0) i = 8;
-            else i = arc4random() % maxTypes;
-            break;
-        case 2:
-            
-            if (corruptedProbability != 0) {
-                l = arc4random() % corruptedProbability;
-            }else{
-                l = arc4random();
-            }
-            
-            if (l == 0) i = 9;
-            else i = arc4random() % maxTypes;
-            break;
-        case 3:
-            
-            if (hiddenProbability != 0) {
-                l = arc4random() % hiddenProbability;
-            }else{
-                l = arc4random();
-            }
-            
-            if (l == 0) i = 10;
-            else i = arc4random() % maxTypes;
-            break;
-        default:
-            break;
-    }
-    
-    if (i == 7) newSymbol->isKeepable = true;
-    
-    if (i < 8) {
-        char file[0x50] = {0};
-//        sprintf(file, "symbol%d@2x.png" , i);
-        sprintf(file, "symbol%d-idle0@2x.png" , i);
+//    switch (k) {
+//        case 0:
+//            
+//            if (wildcardProbability != 0) {
+//                l = arc4random() % wildcardProbability;
+//            }else{
+//                l = arc4random();
+//            }
+//            
+//            if (l == 0) i = 7;
+//            else i = arc4random() % maxTypes;
+//            break;
+//        case 1:
+//            
+//            if (shifterProbability != 0) {
+//                l = arc4random() % shifterProbability;
+//            }else{
+//                l = arc4random();
+//            }
+//            
+//            if (l == 0) i = 8;
+//            else i = arc4random() % maxTypes;
+//            break;
+//        case 2:
+//            
+//            if (corruptedProbability != 0) {
+//                l = arc4random() % corruptedProbability;
+//            }else{
+//                l = arc4random();
+//            }
+//            
+//            if (l == 0) i = 9;
+//            else i = arc4random() % maxTypes;
+//            break;
+//        case 3:
+//            
+//            if (hiddenProbability != 0) {
+//                l = arc4random() % hiddenProbability;
+//            }else{
+//                l = arc4random();
+//            }
+//            
+//            if (l == 0) i = 10;
+//            else i = arc4random() % maxTypes;
+//            break;
+//        default:
+//            break;
+//    }
+//    
+//    if (i == 7) newSymbol->isKeepable = true;
+//    CCLOG("type = %d", i);
+//    if (i < 8) {
+//        char file[0x50] = {0};
+////        sprintf(file, "symbol%d@2x.png" , i);
+//        
+//        
+//        
+//        sprintf(file, "symbol%d-idle0@2x.png" , i);
+//
+//        newSymbol->initWithFile(file);
+//        
+//    }
 
-        newSymbol->initWithFile(file);
-        
-    }
+    char file[0x50] = {0};
     
+    i = arc4random() % maxTypes;
+    sprintf(file, "symbol%d-idle0@2x.png" , i);
+    newSymbol->initWithFile(file);
+
 //    if (i == 8) {
 //        newSymbol->isShifter = true;
 //        i = arc4random() % 7;
@@ -251,10 +261,11 @@ void SymbolManager:: turnToExplosiveSymbol(SyntaxSymbol* thisSymbol) {
         if (!thisSymbol->isExplosive) {
             thisSymbol->isKeepable = true;
             thisSymbol->isExplosive = true;
-            char file[0x50] = {0};
-            sprintf(file, "symbol%d-glow@2x.png",thisSymbol->isOfType);
-            thisSymbol->initWithFile(file);
-            animGlowSymbol(thisSymbol);
+//            char file[0x50] = {0};
+//            sprintf(file, "symbol%d-glow@2x.png",thisSymbol->isOfType);
+//            thisSymbol->initWithFile(file);
+//            animGlowSymbol(thisSymbol);
+            animSparkSymbol(thisSymbol);
         }
     }
 }
@@ -316,37 +327,37 @@ void SymbolManager:: shiftSymbol(SyntaxSymbol* thisSymbol ,int thisType) {
     thisSymbol->isOfType = thisType;
      if (!thisSymbol->isShifter) {
         thisSymbol->initWithFile(file);
-        if (thisType == 9) {
-            thisSymbol->isKeepable = true;
-            thisSymbol->initWithFile("symbol9b@2x.png");
-            thisSymbol->runAction(CCFadeTo::create(0.6f, 255.0f));
-            animSuperSymbol(thisSymbol);
- 
-        }
-        if (thisType == 10) {
-            thisSymbol->isKeepable = true;
-            hiddenSymbolAnimationFrames = CCAnimation::create();
-            for (int i =1 ; i< 5; i++) {
-                char file[0x50] = {0};
-                sprintf(file, "symbol10-%d@2x.png" , i);
-                hiddenSymbolAnimationFrames->addSpriteFrameWithFileName(file);
-                hiddenSymbolAnimationFrames->setDelayPerUnit(0.1f);
-                hiddenSymbolAnimationFrames->setLoops(1);
-                
-            }
-
-            CCAnimate* ani = CCAnimate::create(hiddenSymbolAnimationFrames);
-            thisSymbol->runAction(ani);
-            hiddenSymbolAnimationFrames = NULL;
-            ani = NULL;
-         }
-        if (thisType == 11) {
-            thisSymbol->runAction(CCFadeTo::create(0.6f, 1.0f));
-            thisSymbol->initWithFile("symbol11b@2x.png");
-            animShiftToSuperSymbol(thisSymbol);
-            animGlowSymbol(thisSymbol);
-            
-        }
+//        if (thisType == 9) {
+//            thisSymbol->isKeepable = true;
+//            thisSymbol->initWithFile("symbol9b@2x.png");
+//            thisSymbol->runAction(CCFadeTo::create(0.6f, 255.0f));
+//            animSuperSymbol(thisSymbol);
+// 
+//        }
+//        if (thisType == 10) {
+//            thisSymbol->isKeepable = true;
+//            hiddenSymbolAnimationFrames = CCAnimation::create();
+//            for (int i =1 ; i< 5; i++) {
+//                char file[0x50] = {0};
+//                sprintf(file, "symbol10-%d@2x.png" , i);
+//                hiddenSymbolAnimationFrames->addSpriteFrameWithFileName(file);
+//                hiddenSymbolAnimationFrames->setDelayPerUnit(0.1f);
+//                hiddenSymbolAnimationFrames->setLoops(1);
+//                
+//            }
+//
+//            CCAnimate* ani = CCAnimate::create(hiddenSymbolAnimationFrames);
+//            thisSymbol->runAction(ani);
+//            hiddenSymbolAnimationFrames = NULL;
+//            ani = NULL;
+//         }
+//        if (thisType == 11) {
+//            thisSymbol->runAction(CCFadeTo::create(0.6f, 1.0f));
+//            thisSymbol->initWithFile("symbol11b@2x.png");
+//            animShiftToSuperSymbol(thisSymbol);
+//            animGlowSymbol(thisSymbol);
+//            
+//        }
     }
     else animShifterSymbol(thisSymbol);
 }
@@ -366,11 +377,26 @@ void SymbolManager ::revealHiddenSymbol(SyntaxSymbol* thisSymbol) {
 void SymbolManager:: animHideSymbol(SyntaxSymbol *thisSymbol,float thisDelay) {
     
 //    CCBlink* blink = CCBlink::create(thisDelay, 15);
-//    thisSymbol->runAction(CCSequence::create(CCDelayTime::create(0.3f), blink , CCCallFuncN::create(this, callfuncN_selector(SymbolManager::removdSymbol)), NULL));
     
+    CCAnimation* temp = CCAnimation::create();
     
+    for (int i = 0; i < anim_clear_frames; i++) {
+        char file[0x50] = {0};
+        sprintf(file, "symbol%d-clear%d@2x.png" , thisSymbol->isOfType, i);
+        temp->addSpriteFrameWithFileName(file);
+    }
     
-    removdSymbol(thisSymbol);
+    temp->setLoops(1);
+    temp->setDelayPerUnit(0.05f);
+    CCAnimate* ani = CCAnimate::create(temp);
+//    thisSymbol->runAction(ani);
+
+    thisSymbol->runAction(CCSequence::create(/*CCDelayTime::create(0.3f),*/ ani , CCCallFuncN::create(this, callfuncN_selector(SymbolManager::removdSymbol)), NULL));
+
+    temp = NULL;
+    ani = NULL;
+    
+//    removdSymbol(thisSymbol);
  
     
 }
@@ -391,12 +417,52 @@ void SymbolManager::removdSymbol(CCObject* pSender){
     
 }
 
+void SymbolManager ::animSparkSymbol(SyntaxSymbol *thisSymbol){
+    
+    CCAnimation* temp = CCAnimation::create();
+    
+    for (int i = 0; i < anim_spark_frames; i++) {
+        char file[0x50] = {0};
+        sprintf(file, "symbol%d-spark%d@2x.png" , thisSymbol->isOfType, i);
+        temp->addSpriteFrameWithFileName(file);
+    }
+    
+    temp->setLoops(-1);
+    temp->setDelayPerUnit(0.05f);
+    CCAnimate* ani = CCAnimate::create(temp);
+    
+    thisSymbol->runAction(ani);
+    
+    temp = NULL;
+    ani = NULL;
+    
+}
+
 void SymbolManager ::animGlowSymbol(SyntaxSymbol* thisSymbol) {
     
-    CCFadeTo* fade  = CCFadeTo::create(0.4f, 180.0f);
-    CCFadeTo* fade_a = CCFadeTo::create(0.4f, 255);
-    CCSequence* seq = CCSequence::create(fade , CCDelayTime::create(0.05f) , fade_a , NULL);
-    thisSymbol->runAction(CCRepeatForever::create(seq));
+//    CCFadeTo* fade  = CCFadeTo::create(0.4f, 180.0f);
+//    CCFadeTo* fade_a = CCFadeTo::create(0.4f, 255);
+//    CCSequence* seq = CCSequence::create(fade , CCDelayTime::create(0.05f) , fade_a , NULL);
+//    thisSymbol->runAction(CCRepeatForever::create(seq));
+    
+    CCAnimation* temp = CCAnimation::create();
+    
+    for (int i = 0; i < anim_glow_frames; i++) {
+        char file[0x50] = {0};
+        sprintf(file, "symbol%d-clear%d@2x.png" , thisSymbol->isOfType, i);
+        temp->addSpriteFrameWithFileName(file);
+    }
+    
+    temp->setLoops(1);
+    temp->setDelayPerUnit(0.05f);
+    CCAnimate* ani = CCAnimate::create(temp);
+    //    thisSymbol->runAction(ani);
+    
+    thisSymbol->runAction(CCSequence::create(/*CCDelayTime::create(0.3f),*/ ani , CCCallFuncN::create(this, callfuncN_selector(SymbolManager::removdSymbol)), NULL));
+    
+    temp = NULL;
+    ani = NULL;
+
     
 }
  
@@ -660,7 +726,8 @@ void SymbolManager::refreshGrid(CCArray *thisGrid){
              for (int j = 0; j < 8; j++) {
                 SyntaxSymbol *thisSymbol =(SyntaxSymbol*)temp->objectAtIndex(j);
                 if (thisSymbol->isKeepable) {
-                    if (thisSymbol->isExplosive) animGlowSymbol(thisSymbol);
+                    if (thisSymbol->isExplosive) //animGlowSymbol(thisSymbol);
+                        animSparkSymbol(thisSymbol);
                     else {
                         animSuperSymbol(thisSymbol);
                     }

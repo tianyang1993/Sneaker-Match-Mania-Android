@@ -71,7 +71,7 @@ public:
     void            animHideSymbol(SyntaxSymbol *thisSymbol , float thisDelay);
     
     void            animGlowSymbol(SyntaxSymbol *thisSymbol);
-     
+    void            animSparkSymbol(SyntaxSymbol *thisSymbol);
     
     void            animExplodeSymbol(SyntaxSymbol *thisSymbol , float thisDelay);
     void            setAnimationExplode(CCObject* pSender);
