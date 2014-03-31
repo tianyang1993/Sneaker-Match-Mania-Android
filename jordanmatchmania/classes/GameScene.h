@@ -128,7 +128,7 @@ public:
     void    GameFaild();
     void    showBaner();
 
- 
+    void    playBgMusic();
      
     
        

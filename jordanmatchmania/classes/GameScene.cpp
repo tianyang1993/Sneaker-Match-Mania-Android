@@ -223,18 +223,18 @@ void GameScene:: initGameInfo(){
     addChild(spClock);
 
     CCSprite* spAdBanner = CCSprite::create("ad@2x.png");
-    spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 50, 910) * scale_y));
+    spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 100, 860) * scale_y));
     spAdBanner->setScaleX(scale_x);
     spAdBanner->setScaleY(scale_y);
     addChild(spAdBanner);
     
-    CCMenuItemImage *exitButton = CCMenuItemImage::create("Button_EXIT_1@2x.png", "Button_EXIT_hit@2x.png", "button_EXIT_2@2x.png", this, menu_selector(GameScene::onClickExit));
-    exitButton->setPosition(ccp(getX(14, 162) * scale_x, getY(size.height,102, 798) * scale_y));
+    CCMenuItemImage *exitButton = CCMenuItemImage::create("Button_EXIT_1@2x.png", "Button_EXIT_hit@2x.png", this, menu_selector(GameScene::onClickExit));
+    exitButton->setPosition(ccp(getX(17, 162) * scale_x, getY(size.height,102, 775) * scale_y));
     exitButton->setScaleX(scale_x);
     exitButton->setScaleY(scale_y);
 
-    CCMenuItemImage *hintButton = CCMenuItemImage::create("button_HINT_1@2x.png", "button_HINT_hit@2x.png", "button_HINT_2@2x.png", this, menu_selector(GameScene::onClickHint));
-    hintButton->setPosition(ccp(getX(464, 162) * scale_x, getY(size.height,102, 798) * scale_y));
+    CCMenuItemImage *hintButton = CCMenuItemImage::create("button_HINT_1@2x.png", "button_HINT_hit@2x.png", this, menu_selector(GameScene::onClickHint));
+    hintButton->setPosition(ccp(getX(460, 162) * scale_x, getY(size.height,102, 775) * scale_y));
     hintButton->setScaleX(scale_x);
     hintButton->setScaleY(scale_y);
 
@@ -242,13 +242,7 @@ void GameScene:: initGameInfo(){
     menu->setPosition(CCPointZero);
     addChild(menu);
 
-    if ((m_nLevel >= 1 && m_nLevel <= 5)
-        ||(m_nLevel >= 11 && m_nLevel <= 15)) {
-        gameSettings->playBackGround((char*)kPlayMusic1);
-    }else if ((m_nLevel >= 6 && m_nLevel <= 10)
-        ||(m_nLevel >= 16 && m_nLevel <= 20)) {
-        gameSettings->playBackGround((char*)kPlayMusic2);
-    }
+    playBgMusic();
 }
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #pragma mark INIT GAME MENU 
@@ -306,9 +300,9 @@ void GameScene::initmenu(){
     strokeTextDef.m_stroke.m_strokeEnabled = true;
     strokeTextDef.m_stroke.m_strokeSize    = 1.8;
     
-    sprintf(file, "%d" , m_nGameTotalScore);
+    sprintf(file, "%d" , m_nGameScore);
     scoreLabel = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
-    scoreLabel->setPosition(ccp(size.width / 2, getY(size.height, 49, 831)));
+    scoreLabel->setPosition(ccp(size.width / 2, getY(size.height, 49, 800)));
     scoreLabel->setScaleY(1.2f*dScaleY);
     scoreLabel->setScaleX(0.8f*dScaleX);
     addChild(scoreLabel,4);
@@ -646,6 +640,7 @@ void GameScene:: showLevelCompleted(){
 
 void GameScene:: showNextLevel(){
     
+    gameSettings->setGameRows(m_nRowsNeedForLevel);
     gameSettings->setCurrentLevel(m_nLevel);
     gameSettings->setProgressBarScale(0.0f);
     gameSettings->setTimeBarScale(1.12*dScaleX);
@@ -656,15 +651,17 @@ void GameScene:: showNextLevel(){
     char file[0x50] = {0};
     sprintf(file , "LEVEL : %d", m_nLevel);
 //    levelLabel->setString((char*)file);
-    sprintf(file, "SCORE: %d" , m_nGameTotalScore);
+    sprintf(file, "%d" , m_nGameScore);
     scoreLabel->setString((char*)file);
     sprintf(file , "%d", m_nByteCount);
 //    bytesCounter->setString((char*)file);
     
      
-    int nType =(m_nLevel)%4;
-    gameSettings->setBackGroundMusic(nType);
-    gameSettings->playBackGround(nType);
+//    int nType =(m_nLevel)%4;
+//    gameSettings->setBackGroundMusic(nType);
+//    gameSettings->playBackGround(nType);
+
+    playBgMusic();
     
     m_fProgressBarScale = 0.0001*dScaleX;
     m_fTimeBarScale = 1.12*dScaleX;
@@ -704,13 +701,12 @@ void GameScene:: restartLevel(){
 //    removeChild(rectifyButton,true);
 //    
 //
+    gameSettings->setGameRows(m_nRowsNeedForLevel);
     gameSettings->setCurrentLevel(m_nLevel);
     gameSettings->setProgressBarScale(0.0f);
     gameSettings->setTimeBarScale(1.12*dScaleX);
     gameSettings->setByteCount(m_nByteCount);
     gameSettings->setGameScore(m_nGameScore);
-    
-    
     
     m_fProgressBarScale = 0.0001*dScaleX;
     m_fTimeBarScale = 1.12*dScaleX;
@@ -860,5 +856,15 @@ void GameScene::onReshuffle(cocos2d::CCObject *pSender){
 //    }
 //
 //}
+
+void GameScene::playBgMusic(){
+    if ((m_nLevel >= 1 && m_nLevel <= 5)
+        ||(m_nLevel >= 11 && m_nLevel <= 15)) {
+        gameSettings->playBackGround((char*)kPlayMusic1);
+    }else if ((m_nLevel >= 6 && m_nLevel <= 10)
+              ||(m_nLevel >= 16 && m_nLevel <= 20)) {
+        gameSettings->playBackGround((char*)kPlayMusic2);
+    }
+}
 
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

@@ -60,7 +60,7 @@ bool JoinLayer::init()
     addChild(spLogo);
     
     CCSprite* spAdBanner = CCSprite::create("ad@2x.png");
-    spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 50, 910) * scale_y));
+    spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 100, 860) * scale_y));
     spAdBanner->setScaleX(scale_x);
     spAdBanner->setScaleY(scale_y);
     addChild(spAdBanner);

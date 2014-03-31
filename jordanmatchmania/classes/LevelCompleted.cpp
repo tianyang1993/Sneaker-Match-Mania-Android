@@ -52,13 +52,19 @@ void LevelCompleted::initWithGame(GameScene *nScene){
     CCFiniteTimeAction *scale3 = CCScaleTo::create(0.05f, 1.0f*dScaleX);
     popUp->runAction(CCSequence::create(scale1, scale2, scale3, NULL));
 
+    CCSprite* spAdBanner = CCSprite::create("ad@2x.png");
+    spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 100, 860) * scale_y));
+    spAdBanner->setScaleX(scale_x);
+    spAdBanner->setScaleY(scale_y);
+    addChild(spAdBanner,12);
+
     CCMenuItemImage *endButton = CCMenuItemImage::create("Button_END_1@2x.png", "Button_END_hit@2x.png", "button_END_2@2x.png", this, menu_selector(LevelCompleted::onClickEnd));
-    endButton->setPosition(ccp(getX(44, 162) * scale_x, getY(size.height,102, 758) * scale_y));
+    endButton->setPosition(ccp(getX(84, 162) * scale_x, getY(size.height,102, 738) * scale_y));
     endButton->setScaleX(scale_x);
     endButton->setScaleY(scale_y);
     
     CCMenuItemImage *nextButton = CCMenuItemImage::create("Button_NEXT_1@2x.png", "Button_NEXT_hit@2x.png", "button_NEXT_2@2x.png", this, menu_selector(LevelCompleted::onClickNext));
-    nextButton->setPosition(ccp(getX(434, 162) * scale_x, getY(size.height,102, 758) * scale_y));
+    nextButton->setPosition(ccp(getX(394, 162) * scale_x, getY(size.height,102, 738) * scale_y));
     nextButton->setScaleX(scale_x);
     nextButton->setScaleY(scale_y);
     
