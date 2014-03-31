@@ -161,7 +161,6 @@ void GameScene:: initGameInfo(){
     byteManager->initWithGame();
     
 //    allPopUps = new CCArray();
-    
    
     m_nRowsNeedForLevel = gameSettings->getGameRows();
     m_nGameScore        = gameSettings->getGameScore();

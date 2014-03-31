@@ -140,7 +140,7 @@ void GameSettings:: setGameScore(int nScore){
 }
 
 int GameSettings:: getGameScore(){
-    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameScore");
+    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameScore", 6);
 }
 
 void GameSettings::setGameRows(int nRows){
@@ -149,7 +149,8 @@ void GameSettings::setGameRows(int nRows){
 }
 
 int GameSettings::getGameRows(){
-    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameRows");
+    //return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameRows");
+    return 6;
 }
 
 void GameSettings:: setTotalGameScore(int nScore){

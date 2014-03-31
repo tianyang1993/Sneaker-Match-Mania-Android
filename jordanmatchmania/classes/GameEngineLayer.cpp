@@ -69,12 +69,15 @@ bool GameEngine::init(){
     dScaleFactorX = size.width / 768, dSclaeFactorY = size.height / 1024;
     setTouchEnabled(true);
     
+    
     initGame();
       
     return true;
 }
 void GameEngine::initGame(){
    
+    
+    gameSettings = GameSettings::sharedGameSettings();
     isVisible           = false;
     isShockwave         = false;
     isCascading         = false;
@@ -108,7 +111,7 @@ void GameEngine::initGame(){
      
     gameGrid = new CCArray();
         
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp = new CCArray();
         gameGrid->addObject(temp);
     }
@@ -260,13 +263,13 @@ void GameEngine::hideStuckMessage(){
 
 void GameEngine::reshuffle() {
  
-    gameSettings = GameSettings::sharedGameSettings();
+    
     gameSettings->playSound((char*)"SFX-HiddenSymbolMorph.wav");
    
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             
             SyntaxSymbol *symbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             
@@ -317,9 +320,9 @@ void GameEngine::populateGameField(){
     
     CCLOG("populateGameField");
     
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp = new CCArray();
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             bool isSymbolLoaded = true;
             SyntaxSymbol *symbol = NULL;
             if (!symbol)
@@ -368,11 +371,11 @@ void GameEngine::populateGameFieldForNextLevel(){
     symbolsToSkip->removeAllObjects();
     symbolsToMove->removeAllObjects();
     
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         
         CCArray* temp;
         
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
            temp = (CCArray*)gameGrid->objectAtIndex(i);
             SyntaxSymbol *symbol =(SyntaxSymbol*)temp->objectAtIndex(j);
             if (symbol->isKeepable) {
@@ -642,8 +645,8 @@ void GameEngine::eliminateNeightboursOfSymbolAtIndex(CCPoint thisIndex) {
 }
 
 void GameEngine::eliminateAllSymbolsOfType(int thisType) {
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             CCArray* temp;
             temp = (CCArray*)gameGrid->objectAtIndex(i);
             SyntaxSymbol *symbolToCheck = (SyntaxSymbol*)temp->objectAtIndex(j);//[[gameGrid objectAtIndex:i] objectAtIndex:j];
@@ -659,13 +662,13 @@ void GameEngine::eliminateAllSymbolsOfType(int thisType) {
 
 void GameEngine::eliminateAllSymbolsInLineWithSymbolAtIndex(CCPoint thisIndex) {
   
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
         SyntaxSymbol *symbolToAdd = (SyntaxSymbol*)temp->objectAtIndex(thisIndex.y);//[[gameGrid objectAtIndex:i] objectAtIndex:thisIndex.y];
         if (!(symbolsToRemove->containsObject(symbolToAdd))) symbolsToRemove->addObject(symbolToAdd);
     }
-    for (int j = 0; j < 8; j++) {
+    for (int j = 0; j < gameSettings->getGameRows(); j++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(thisIndex.x);
         SyntaxSymbol *symbolToAdd =(SyntaxSymbol*)temp->objectAtIndex(j); //[[gameGrid objectAtIndex:thisIndex.x] objectAtIndex:j];
@@ -734,13 +737,13 @@ void GameEngine::eraseSymbols() {
 
 void GameEngine::refillGameField(){
   
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
 
         int m = temp->count();
         if (m < 8) {
-            for (int j = 0; j < 8 - m; j++) {
+            for (int j = 0; j < gameSettings->getGameRows() - m; j++) {
                 SyntaxSymbol *newSymbol = symbolManager->randomSymbolWithMaxType(6);
                 newSymbol->setPosition(CCPointFromIndex(CCPointMake(i, 8+j))); 
                 newSymbol->isIndex = CCPointMake(i, 8+j);
@@ -756,10 +759,10 @@ void GameEngine::refillGameField(){
 
 void GameEngine::repositionAllSymbols(){
  
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *thisSymbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             if (!(thisSymbol->isIndex.y == j)) {
                 thisSymbol->dropSize = thisSymbol->isIndex.y - j;
@@ -780,13 +783,13 @@ void GameEngine::repositionAllSymbols(){
     bool didFindSpot;
     
  
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         k = 0;
         didFindSpot = false;
         CCArray* temp ;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
         
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *thisSymbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             if (symbolsToMove->containsObject(thisSymbol)) {
                 if (!didFindSpot) l++;
@@ -846,10 +849,10 @@ void GameEngine::checkIfAllSymbolsRepositioned(){
 
 void GameEngine::shiftShifters(){
     int k;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *thisSymbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             if (thisSymbol->isShifter) {
                 k = arc4random() % 2;
@@ -882,30 +885,30 @@ void GameEngine::buyWildcard(){
 void GameEngine::searchPatterns() {
     
     ///L-shaped pattern
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *searchedSymbol = (SyntaxSymbol*) temp->objectAtIndex(j);
             if (searchedSymbol->isOfType < 7) if (!(symbolsToRemove->containsObject(searchedSymbol))) this->searchPatternLShapeForSymbol(searchedSymbol);
         }
     }
     
     ///horizontal patterns
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < gameSettings->getGameRows() - 2; i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *searchedSymbol = (SyntaxSymbol*) temp->objectAtIndex(j);
             if (searchedSymbol->isOfType < 7) if (!(symbolsToRemove->containsObject(searchedSymbol))) this->searchPatternHorizontalForSymbol(searchedSymbol);
         }
     }
     
     ///vertical patterns
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < gameSettings->getGameRows() - 2; j++) {
             SyntaxSymbol *searchedSymbol = (SyntaxSymbol*) temp->objectAtIndex(j);
             if (searchedSymbol->isOfType < 7) if (!(symbolsToRemove->containsObject(searchedSymbol))) this->searchPatternVerticalForSymbol(searchedSymbol);
         }
@@ -946,7 +949,7 @@ void GameEngine::searchPatternLShapeForSymbol(SyntaxSymbol *thisSymbol){
             if (thisSymbol->isOfType == nextSymbol->isOfType) hasHorizontal = true;
                 }
     }
-    if (x < 6) {
+    if (x < gameSettings->getGameRows() - 2) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(x+1);
         SyntaxSymbol *nextSymbol = (SyntaxSymbol*) temp->objectAtIndex(y);
@@ -967,7 +970,7 @@ void GameEngine::searchPatternLShapeForSymbol(SyntaxSymbol *thisSymbol){
             if (thisSymbol->isOfType == nextSymbol->isOfType) hasVertical = true;
                 }
     }
-    if (y < 6) {
+    if (y < gameSettings->getGameRows() - 2) {
         CCArray* temp;
         temp = (CCArray*)gameGrid->objectAtIndex(x);
         SyntaxSymbol *nextSymbol = (SyntaxSymbol*) temp->objectAtIndex(y+1);
@@ -999,7 +1002,7 @@ void GameEngine::searchPatternHorizontalForSymbol(SyntaxSymbol* thisSymbol){
     
     if (thisSymbol->isExplosive) canEliminateNeighbours = true;
         
-        while (x < 8) {
+        while (x < gameSettings->getGameRows()) {
             CCArray* temp;
             temp = (CCArray*)gameGrid->objectAtIndex(x);
             SyntaxSymbol *nextSymbol = (SyntaxSymbol*) temp->objectAtIndex(y);
@@ -1081,7 +1084,7 @@ void GameEngine::searchPatternVerticalForSymbol(SyntaxSymbol *thisSymbol){
     
     if (thisSymbol->isExplosive) canEliminateNeighbours = true;
         
-        while (y < 8) {
+        while (y < gameSettings->getGameRows()) {
             CCArray* temp;
             temp = (CCArray*)gameGrid->objectAtIndex(thisSymbol->isIndex.x);
             SyntaxSymbol *nextSymbol = (SyntaxSymbol*) temp->objectAtIndex(y);
@@ -1191,10 +1194,10 @@ bool GameEngine:: getHintExceptThis(CCPoint lastPoint) { // to recognize last mo
     CCPoint hint = CCPointMake(-1, -1);
     CCPoint specialPos = CCPointMake(-1, -1);
     hintGrid = gameGrid;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)hintGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             if (!possiblePatternFount && ! ((lastPoint.x == i)&&(lastPoint.y == j)) /*CCPointEqualToPoint(lastPoint, CCPointMake(i, j))*/) {
                 SyntaxSymbol *symbolToTest = (SyntaxSymbol*) temp->objectAtIndex(j);
 //                SyntaxSymbol *symbolToTest = [[[hintGrid objectAtIndex:i] objectAtIndex:j] retain];
@@ -1244,11 +1247,11 @@ CCPoint GameEngine:: getHint() {
     CCPoint hint = CCPointMake(-1, -1);
     CCPoint specialPos = CCPointMake(-1, -1);
     hintGrid = gameGrid;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*)hintGrid->objectAtIndex(i);
 
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             if (!possiblePatternFount) {
                 SyntaxSymbol *symbolToTest = (SyntaxSymbol*) temp->objectAtIndex(j);
 //                SyntaxSymbol *symbolToTest = [[[hintGrid objectAtIndex:i] objectAtIndex:j] retain];
@@ -1401,17 +1404,17 @@ bool GameEngine:: possiblePatternFoundForSymbol(SyntaxSymbol *thisSymbol) {
 
 CCPoint GameEngine::CCPointFromIndex(CCPoint thisIndex) {
    
-    return CCPointMake((50 + (thisIndex.x * 95))*dScaleFactorX, 200*dSclaeFactorY + (40*dSclaeFactorY + (thisIndex.y * 80*dSclaeFactorY)));
+    return CCPointMake((50 + (thisIndex.x * 70))*dScaleFactorX, 200*dSclaeFactorY + (40*dSclaeFactorY + (thisIndex.y * 70*dSclaeFactorY)));
 }
 void GameEngine::glitch() {
    
     SyntaxSymbol *symbolToGlitch;
     float delay;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
         
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             symbolToGlitch = (SyntaxSymbol*)temp->objectAtIndex(j);
             delay = sqrtf(i*i + j*j) / 15;
             symbolManager->animGlitchSymbol(symbolToGlitch,delay);
@@ -1427,10 +1430,10 @@ void GameEngine::shockWaveFromCenter(CCPoint thisCenter) {
     float m = thisCenter.x;
     float n = thisCenter.y;
     
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             symbolToGlitch = (SyntaxSymbol*)temp->objectAtIndex(j);
             if (!(symbolsToRemove->containsObject(symbolToGlitch))) {
                 delay = sqrtf((i - m)*(i - m) + (j - n)*(j - n)) / 15;
@@ -1474,11 +1477,11 @@ void GameEngine::checkScore(){
 
 void GameEngine::resetGame(){
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
 
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *symbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             symbolManager->animHideSymbol(symbol ,0);
         }
@@ -1539,10 +1542,10 @@ void GameEngine::resetGame(){
 }
 
 void GameEngine::clearGame(){
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp ;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *symbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             symbolManager->animHideSymbol(symbol,(float)((arc4random() % 100) / 100.0));
         }
@@ -1592,10 +1595,10 @@ void GameEngine::ccTouchesBegan(CCSet* touches,CCEvent* event) {
         return;
     }
     
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *symbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             CCRect rect = CCRectMake(symbol->getPosition().x - symbol->getContentSize().width*dScaleFactorX / 2 ,
                                      symbol->getPosition().y - symbol->getContentSize().height*dSclaeFactorY / 2,
@@ -1623,11 +1626,11 @@ void GameEngine::ccTouchesMoved(CCSet* touches,CCEvent* event) {
     CCTouch *touch =(CCTouch*)(touches->anyObject());
 	CCPoint touchPos = touch->getLocationInView();
 	touchPos = CCDirector::sharedDirector()->convertToGL(touchPos);
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp  ;
         CCArray* temp_1  ;
         temp = (CCArray*) gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *thisSymbol = (SyntaxSymbol*)temp->objectAtIndex(j);
             if (thisSymbol == firstTouchedSymbol) {
                 
@@ -1668,9 +1671,9 @@ void GameEngine::registerWithTouchDispatcher()
 }
 void GameEngine::checkForInfoPopUps(){
     
-     for (int i = 0; i < 8; i++) {
+     for (int i = 0; i < gameSettings->getGameRows(); i++) {
         CCArray* temp = (CCArray*) gameGrid->objectAtIndex(i);
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < gameSettings->getGameRows(); j++) {
             SyntaxSymbol *thisSymbol =(SyntaxSymbol*)temp->objectAtIndex(j);
             if ((thisSymbol->isOfType > 6) || (thisSymbol->isShifter)) {
             int k = -1;
