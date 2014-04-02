@@ -21,11 +21,11 @@ bool LevelCompleted::init(){
     if (!CCLayer::init()) {
         return false;
     }
-        this->setTouchEnabled(true);
-        size = CCDirector::sharedDirector()->getWinSize();
-        dScaleX = size.width / 768 , dScaleY = size.height / 1024;
-        return true;
-     
+
+    this->setTouchEnabled(true);
+    size = CCDirector::sharedDirector()->getWinSize();
+    dScaleX = size.width / 768 , dScaleY = size.height / 1024;
+    return true;
 }
 
 void LevelCompleted::initWithGame(GameScene *nScene){
