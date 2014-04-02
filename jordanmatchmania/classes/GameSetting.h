@@ -66,9 +66,6 @@ public:
     void        setGameScore(int nScore);
     int         getGameScore();
 
-    void        setGameRows(int nRows);
-    int         getGameRows();
-
     void        setGameLives(int nLives);
     int         getGameLives();
 
@@ -86,15 +83,8 @@ public:
     void        setCurrentLevel(int nLevel);
     int         getCurrentLevel();
     
-    void        setProgressBarScale(float nScale);
-    float       getProgressBarScale();
-    
-    void        setTimeBarScale(float nScale);
-    float       getTimeBarScale();
-    
     void        setEffectMute(bool nMute);
     bool        getEffectMute();
-    
     
     void        playSound(char* file);
     void        playBackGround(int nType);

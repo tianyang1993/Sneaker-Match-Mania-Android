@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "MoreLayer.h"
 #include "MainView.h"
+#include "Define.h"
 
 GameOver* GameOver::layer(){
     
@@ -26,59 +27,43 @@ void GameOver::initWithGame(GameScene* nScene){
         gameSettings = GameSettings::sharedGameSettings();
         gameScene = nScene;
     
-        char file[0x50] = {0};
-        m_nGameMode = gameSettings->getGameMode();
-        if (m_nGameMode == kTagTime) {
-            sprintf(file, "iphone_newgameover_notime@2x.png");
-        }else {
-    
-            sprintf(file, "iphone_newgameover_nomatch@2x.png");
-        }
-    
-        CCSprite* back = CCSprite::create(file);
+        CCSprite* back = CCSprite::create("bkg_default@2x.png");
         back->setPosition(ccp(size.width / 2, size.height / 2));
         back->setScaleX(size.width / back->getContentSize().width);
         back->setScaleY(size.height / back->getContentSize().height);
         addChild(back , 2);
-    
-        CCMenuItemImage* playagain = CCMenuItemImage::create("iphone_mainmenu_press.png", "iphone_playagain_press.png", this, menu_selector(GameOver::onPlayAgain));
-        playagain->setPosition(ccp(size.width /5 , size.height / 7));
-        playagain->setScaleX(playagain->getScaleX()*dScaleX);
-        playagain->setScaleY(playagain->getScaleY()*dScaleY);
-    
-        CCMenuItemImage* freeapp = CCMenuItemImage::create("iphone_mainmenu_press.png", "iphone_freeapp_press.png", this, menu_selector(GameOver::onFreeApp));
-        freeapp->setPosition(ccp(size.width /2 , size.height / 7));
-        freeapp->setScaleX(freeapp->getScaleX()*dScaleX);
-        freeapp->setScaleY(freeapp->getScaleY()*dScaleY);
-    
-        CCMenuItemImage* mainmenu = CCMenuItemImage::create("iphone_mainmenu_press.png", "iphone_mainmenu_press.png", this, menu_selector(GameOver::onMainMenu));
-        mainmenu->setPosition(ccp(size.width *4/5 , size.height / 7));
-        mainmenu->setScaleX(mainmenu->getScaleX()*dScaleX);
-        mainmenu->setScaleY(mainmenu->getScaleY()*dScaleY);
-    
-        CCMenu* menu = CCMenu::create(playagain , freeapp , mainmenu , NULL);
-        menu->setPosition(CCPointZero);
-        addChild(menu , 1);
-    
-    
-     
-        ccFontDefinition strokeTextDef;
-        strokeTextDef.m_fontSize = 70*dScaleX;
-        strokeTextDef.m_fontName = std::string("Dimbo Regular");
-        strokeTextDef.m_stroke.m_strokeColor   = ccYELLOW;
-        strokeTextDef.m_stroke.m_strokeEnabled = true;
-        strokeTextDef.m_stroke.m_strokeSize    = 3.0f;
         
-        sprintf(file, "%d" , gameSettings->getGameScore());
-        m_lHighScore = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
-        m_lHighScore->setPosition(ccp(size.width / 2, size.height / 2 +50*dScaleY));
-        addChild(m_lHighScore , 3);
-    
-        sprintf(file, " HighScore  %d" , gameSettings->getGameScore());
-        m_lLabelHighScore = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
-        m_lLabelHighScore->setPosition(ccp(size.width / 2, size.height / 2-200*dScaleY));
-        addChild(m_lLabelHighScore , 3);
-
+        float scale_x = size.width / back->getContentSize().width;
+        float scale_y = size.height / back->getContentSize().height;
+        
+        CCSprite* popUp = CCSprite::create("Text_TryAgain@2x.png");
+        popUp->setPosition(ccp(size.width / 2, size.height / 2 + 100));
+        addChild(popUp , 11);
+        
+        CCFiniteTimeAction *scale1 = CCScaleTo::create(0.15f, 1.1f*dScaleX);
+        CCFiniteTimeAction *scale2 = CCScaleTo::create(0.05f, 0.9f*dScaleX);
+        CCFiniteTimeAction *scale3 = CCScaleTo::create(0.05f, 1.0f*dScaleX);
+        popUp->runAction(CCSequence::create(scale1, scale2, scale3, NULL));
+        
+        CCSprite* spAdBanner = CCSprite::create("ad@2x.png");
+        spAdBanner->setPosition(ccp(size.width / 2 , getY(size.height, 100, 860) * scale_y));
+        spAdBanner->setScaleX(scale_x);
+        spAdBanner->setScaleY(scale_y);
+        addChild(spAdBanner,12);
+        
+        CCMenuItemImage *noButton = CCMenuItemImage::create("Button_NO_1@2x.png", "Button_NO_hit@2x.png", "button_NO_2@2x.png", this, menu_selector(GameOver::onMainMenu));
+        noButton->setPosition(ccp(getX(84, 162) * scale_x, getY(size.height,102, 738) * scale_y));
+        noButton->setScaleX(scale_x);
+        noButton->setScaleY(scale_y);
+        
+        CCMenuItemImage *yesButton = CCMenuItemImage::create("Button_YES_1@2x.png", "Button_YES_hit@2x.png", "button_YES_2@2x.png", this, menu_selector(GameOver:: onPlayAgain));
+        yesButton->setPosition(ccp(getX(394, 162) * scale_x, getY(size.height,102, 738) * scale_y));
+        yesButton->setScaleX(scale_x);
+        yesButton->setScaleY(scale_y);
+        
+        CCMenu* menu = CCMenu::create(noButton,yesButton,NULL);
+        menu->setPosition(CCPointZero);
+        addChild(menu, 12);
      
     }
     return;

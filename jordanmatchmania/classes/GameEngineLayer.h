@@ -18,7 +18,6 @@ USING_NS_CC;
 
 class SymbolManager;
 class SyntaxSymbol;
-class GameItem;
 class GameEngine : public CCLayer{
 public:
     virtual bool init();
@@ -36,7 +35,6 @@ public:
    
     
     GameScene *gameScene;
-    GameItem  *gameItem;
     GameSettings* gameSettings;
     SymbolManager *symbolManager;
     

@@ -16,7 +16,6 @@ USING_NS_CC;
 
 class SymbolManager;
 class StatusManager;
-class GameSettings;
 
 class GameItem : public CCObject{
 public:
@@ -29,12 +28,9 @@ public:
     float timer;
     
     SymbolManager *symbolManager;
-    GameSettings *gameSettings;
     
     void initWithDictionary(CCDictionary* gameDictionary);
     CCDictionary* getDataInDictionary();
-
-
     
 };
 

@@ -143,15 +143,6 @@ int GameSettings:: getGameScore(){
     return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameScore");
 }
 
-void GameSettings::setGameRows(int nRows){
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("gameRows", nRows);
-    
-}
-
-int GameSettings::getGameRows(){
-    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gameRows", 6);
-}
-
 void GameSettings:: setTotalGameScore(int nScore){
     CCUserDefault::sharedUserDefault()->setIntegerForKey("gameTotalScore", nScore);
 }
@@ -176,24 +167,6 @@ int GameSettings::getCurrentLevel(){
     return CCUserDefault::sharedUserDefault()->getIntegerForKey("currentLevel", 1);
 }
 
-///\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-
-void GameSettings:: setProgressBarScale(float nScale){
-    CCUserDefault::sharedUserDefault()->setFloatForKey("progressbarscale", nScale);
-}
-
-float GameSettings:: getProgressBarScale(){
-    return CCUserDefault::sharedUserDefault()->getFloatForKey("progressbarscale");
-}
-
-
-///\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-void GameSettings:: setTimeBarScale(float nScale){
-    CCUserDefault::sharedUserDefault()->setFloatForKey("timebarscale", nScale);
-}
-float GameSettings:: getTimeBarScale(){
-    return CCUserDefault::sharedUserDefault()->getFloatForKey("timebarscale");
-}
 ///\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 
 void GameSettings:: setMoreToHowToPlayerScene(int select){

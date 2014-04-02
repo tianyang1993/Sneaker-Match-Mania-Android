@@ -411,7 +411,7 @@ void SymbolManager::animHintSysmbol(SyntaxSymbol *thisSymbol, float thisDelay){
         temp->addSpriteFrameWithFileName(file);
     }
     
-    temp->setLoops(-1);
+    temp->setLoops(10);
     temp->setDelayPerUnit(thisDelay);
     CCAnimate* ani = CCAnimate::create(temp);
     
@@ -571,28 +571,29 @@ void SymbolManager::animShiftToSuperSymbol(SyntaxSymbol *thisSymbol) {
     CCAnimate* ani = CCAnimate::create(superSymbolMorphFrames);
     thisSymbol->runAction(CCSequence::create(ani , CCDelayTime::create(0.2f) , CCCallFuncN::create(this, callfuncN_selector(SymbolManager::addSymbol)) , NULL));
     superSymbolMorphFrames = NULL;
-    
-
 }
+
 void SymbolManager::addSymbol(cocos2d::CCObject *pSender){
     
     SyntaxSymbol* thisSymbol = (SyntaxSymbol*) pSender;
-    thisSymbol->initWithFile("symbol11@2x.png");
-    maske = CCAnimation::create();
-    char file[0x50] = {0};
-    sprintf(file, "symbol11@2x.png");
-    maske->addSpriteFrameWithFileName(file);
-    sprintf(file, "symbol11b@2x.png");
-    maske->addSpriteFrameWithFileName(file);
-    
-    maske->setDelayPerUnit(0.2f);
-     
+    thisSymbol->initWithFile("mm.png");
 
-    aniExplode = CCAnimate::create(maske);
-    thisSymbol->runAction(CCRepeatForever::create(aniExplode));
-    
-    maske = NULL;
-    aniExplode = NULL;
+//    thisSymbol->initWithFile("symbol11@2x.png");
+//    maske = CCAnimation::create();
+//    char file[0x50] = {0};
+//    sprintf(file, "symbol11@2x.png");
+//    maske->addSpriteFrameWithFileName(file);
+//    sprintf(file, "symbol11b@2x.png");
+//    maske->addSpriteFrameWithFileName(file);
+//    
+//    maske->setDelayPerUnit(0.2f);
+//     
+//
+//    aniExplode = CCAnimate::create(maske);
+//    thisSymbol->runAction(CCRepeatForever::create(aniExplode));
+//    
+//    maske = NULL;
+//    aniExplode = NULL;
     
      
 }

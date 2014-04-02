@@ -9,6 +9,7 @@
 #include "JoinLayer.h"
 #include "Define.h"
 #include "GameScene.h"
+#include "GameSetting.h"
 
 using namespace cocos2d;
 
@@ -77,8 +78,13 @@ bool JoinLayer::init()
     return true;
 }
 
-
 void JoinLayer::onClickPlay(){
     
-    CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, GameScene::scene()));
+    if(GameSettings::sharedGameSettings()->getGameLives() > 0){
+        CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, GameScene::scene()));
+        
+    }else{
+
+        //Go to SorryNoLivesPage
+    }
 }

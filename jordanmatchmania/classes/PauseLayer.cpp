@@ -167,8 +167,8 @@ void PauseLayer:: onGetFreeApp(cocos2d::CCObject *pSender){
     
     m_nGameSettings->playSound((char*)"SFX-GeneralMenuButton.wav");
     AnalyticX::flurryLogEvent("Get Free App");
-   
 }
+
 void PauseLayer:: onSfxOn(cocos2d::CCObject *pSender){
     
     if (sfxon->isVisible() == true) {
