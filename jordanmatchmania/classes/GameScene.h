@@ -33,6 +33,9 @@ public:
     double dScaleX , dScaleY;
     
     CCLabelTTF      *scoreLabel;
+    CCLabelTTF      *clockLabel;
+    CCLabelTTF      *livesLabel;
+    
 //    CCLabelTTF      *levelLabel;
 //    CCLabelTTF      *bytesCounter;
     
@@ -63,40 +66,39 @@ public:
 //    CCMenuItemImage     *reshuffle;
     
     
-   
-    
+    int         m_nClock;
     int         m_nGameScore;
     int         m_nGameTotalScore;
-    int         m_nByteCount;
+//    int         m_nByteCount;
     int         m_nLevel;
     int         m_nPointsNeedForLevel;
     
     int         m_nRowsNeedForLevel;
     
-    int         currentAlert;
-    float       m_fFirstScale;
-    float       m_fProgressBarScale;
-    float       m_fTimeBarScale;
-    GameMode    m_nGameMode;
+//    int         currentAlert;
+//    float       m_fFirstScale;
+//    float       m_fProgressBarScale;
+//    float       m_fTimeBarScale;
+//    GameMode    m_nGameMode;
 
     
     void    initmenu();
     void    initGame();
     void    initGameInfo();
-    void    onClueBtn(CCObject* pSender);
-    void    onMenuBtn(CCObject* pSender);
-    void    onPowerBtn(CCObject* pSender);
-    void    onPlatyTrapBtn(CCObject* pSender);
-    void    onChameLeonsBtn(CCObject* pSender);
-    void    onPowerUpBtn(CCObject* pSender);
-    void    onReshuffleBtn(CCObject* pSender);
-    void    onGameOverBtn(CCObject* pSender);
-    void    onEndGame(CCObject* pSender);
-    void    onReshuffle(CCObject* pSender);
-    void    popupRemoveParticleNO(CCObject* pSender);
-    void    popupRemoveParticleYES(CCObject* pSender);
-    
-    void    setBackGroundView(int nType);
+//    void    onClueBtn(CCObject* pSender);
+//    void    onMenuBtn(CCObject* pSender);
+//    void    onPowerBtn(CCObject* pSender);
+//    void    onPlatyTrapBtn(CCObject* pSender);
+//    void    onChameLeonsBtn(CCObject* pSender);
+//    void    onPowerUpBtn(CCObject* pSender);
+//    void    onReshuffleBtn(CCObject* pSender);
+//    void    onGameOverBtn(CCObject* pSender);
+//    void    onEndGame(CCObject* pSender);
+//    void    onReshuffle(CCObject* pSender);
+//    void    popupRemoveParticleNO(CCObject* pSender);
+//    void    popupRemoveParticleYES(CCObject* pSender);
+//    
+//    void    setBackGroundView(int nType);
    
     void    onClickExit();
     void    onClickHint();
@@ -116,17 +118,17 @@ public:
     void    showLevelCompleted();
     void    showNextLevel();
     void    showGameOver();
-    void    increaseProgressBar(int nScore);
-    void    decreaseProgressBar(float dt);
-    void    decreaseTimeBar(float dt);
+//    void    increaseProgressBar(int nScore);
+//    void    decreaseProgressBar(float dt);
+//    void    decreaseTimeBar(float dt);
     void    restartLevel();
-    void    showPurchaseAlert(int num);
-    void    checkForInfoPopUps();
-    void    clearInfoPopUps();
+//    void    showPurchaseAlert(int num);
+//    void    checkForInfoPopUps();
+//    void    clearInfoPopUps();
     //Game Over
     void    proposeReshuffle();
     void    GameFaild();
-    void    showBaner();
+//    void    showBaner();
 
     void    playBgMusic();
      

@@ -22,7 +22,7 @@ bool LevelCompleted::init(){
         return false;
     }
 
-    this->setTouchEnabled(true);
+//    this->setTouchEnabled(true);
     size = CCDirector::sharedDirector()->getWinSize();
     dScaleX = size.width / 768 , dScaleY = size.height / 1024;
     return true;
@@ -79,23 +79,30 @@ void LevelCompleted::onClickEnd(){
 }
 
 void LevelCompleted::onClickNext(){
-    
-}
-
-void LevelCompleted::ccTouchesBegan(CCSet* touches,CCEvent* event){
-    CCTouch *touch =(CCTouch*)(touches->anyObject());
-    CCPoint touchPos = touch->getLocationInView();
-    touchPos = CCDirector::sharedDirector()->convertToGL(touchPos);
     if (m_nGameScene != NULL) {
-        this->setTouchEnabled(false);
+//        this->setTouchEnabled(false);
         CCFiniteTimeAction *scale1 = CCScaleTo::create(0.15f, 1.1f*dScaleX);
         CCFiniteTimeAction *scale2 = CCScaleTo::create(0.05f, 0.9f*dScaleX);
         CCFiniteTimeAction *scale3 = CCScaleTo::create(0.01f, 0.0f*dScaleX);
         popUp->runAction(CCSequence::create(scale1, scale2, scale3, NULL));
         this->schedule(schedule_selector(LevelCompleted::restart), 0.8f);
-        
     }
+    
 }
+
+//void LevelCompleted::ccTouchesBegan(CCSet* touches,CCEvent* event){
+//    CCTouch *touch =(CCTouch*)(touches->anyObject());
+//    CCPoint touchPos = touch->getLocationInView();
+//    touchPos = CCDirector::sharedDirector()->convertToGL(touchPos);
+//    if (m_nGameScene != NULL) {
+//        this->setTouchEnabled(false);
+//        CCFiniteTimeAction *scale1 = CCScaleTo::create(0.15f, 1.1f*dScaleX);
+//        CCFiniteTimeAction *scale2 = CCScaleTo::create(0.05f, 0.9f*dScaleX);
+//        CCFiniteTimeAction *scale3 = CCScaleTo::create(0.01f, 0.0f*dScaleX);
+//        popUp->runAction(CCSequence::create(scale1, scale2, scale3, NULL));
+//        this->schedule(schedule_selector(LevelCompleted::restart), 0.8f);
+//    }
+//}
 void LevelCompleted::restart(cocos2d::CCObject *pSender){
     this->unschedule(schedule_selector(LevelCompleted::restart));
     this->removeFromParent();

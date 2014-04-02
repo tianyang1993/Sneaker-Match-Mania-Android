@@ -57,8 +57,6 @@ public:
     void        setBackGroundMusic(int nType);
     int         getBackgroundMusic();
 
-    
-    
     void        setSuperType(int nType);
     SuperType   getSuperType();
     
@@ -70,6 +68,12 @@ public:
 
     void        setGameRows(int nRows);
     int         getGameRows();
+
+    void        setGameLives(int nLives);
+    int         getGameLives();
+
+    void        setGameHighScore(int nHighScore);
+    int         getGameHighScore();
     
     void        setTotalGameScore(int nScore);
     int         getTotalGameScore();

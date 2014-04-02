@@ -66,7 +66,7 @@ bool GameEngine::init(){
     }
     
     size  = CCDirector::sharedDirector()->getWinSize();
-    dScaleFactorX = size.width / 768, dSclaeFactorY = size.height / 1024;
+    dScaleFactorX = size.width / 640, dSclaeFactorY = size.height / 960;
     setTouchEnabled(true);
     
     
@@ -122,6 +122,18 @@ void GameEngine::initGame(){
     box->setVisible(false);
     this->addChild(box);
     
+    CCLOG("x = %f, y = %f", this->getPositionX(), this->getPositionY());
+    
+    for (int j = 0; j < gameSettings->getGameRows(); j++) {
+        for (int k = 0; k < gameSettings->getGameRows(); k++) {
+
+            CCSprite *gridSprite = CCSprite::create("grid.png");
+            
+            gridSprite->setPosition(CCPointFromIndex(CCPointMake(j, k)));
+
+            this->addChild(gridSprite);
+        }
+    }
     
     this->populateGameField();
     this->refreshStuckTimer();
@@ -328,7 +340,8 @@ void GameEngine::populateGameField(){
             SyntaxSymbol *symbol = NULL;
             if (!symbol)
                 symbol = symbolManager->randomSymbolWithMaxType(6);
-               
+            
+            symbolManager->animIdleSysmbol(symbol);
             symbol->isIndex = CCPointMake(i, j);
             symbol->setPosition(CCPointFromIndex(symbol->isIndex)); 
             temp->addObject(symbol);
@@ -749,11 +762,12 @@ void GameEngine::refillGameField(){
         temp = (CCArray*)gameGrid->objectAtIndex(i);
 
         int m = temp->count();
-        if (m < 8) {
+        if (m < gameSettings->getGameRows()) {
             for (int j = 0; j < gameSettings->getGameRows() - m; j++) {
                 SyntaxSymbol *newSymbol = symbolManager->randomSymbolWithMaxType(6);
-                newSymbol->setPosition(CCPointFromIndex(CCPointMake(i, 8+j))); 
-                newSymbol->isIndex = CCPointMake(i, 8+j);
+                symbolManager->animIdleSysmbol(newSymbol);
+                newSymbol->setPosition(CCPointFromIndex(CCPointMake(i, gameSettings->getGameRows()+j)));
+                newSymbol->isIndex = CCPointMake(i, gameSettings->getGameRows()+j);
                 this->addChild(newSymbol);
                 temp->addObject(newSymbol);
                 CCLOG("refillGameField type = %d", newSymbol->isOfType);
@@ -942,6 +956,10 @@ void GameEngine::searchPatterns() {
         
     }
     isDoubleMatch = false;
+}
+
+void GameEngine::searchPatternTShapeForSymbol(SyntaxSymbol *thisSymbol){
+    
 }
 
 void GameEngine::searchPatternLShapeForSymbol(SyntaxSymbol *thisSymbol){
@@ -1415,10 +1433,11 @@ bool GameEngine:: possiblePatternFoundForSymbol(SyntaxSymbol *thisSymbol) {
 
 CCPoint GameEngine::CCPointFromIndex(CCPoint thisIndex) {
     
-    float xOffset = size.width - gameSettings->getGameRows() * 70;
-    float yOffset = (size.height - gameSettings->getGameRows() * 70)/2;
-    return CCPointMake((xOffset + (thisIndex.x * 70))*dScaleFactorX, 200*dSclaeFactorY + (yOffset*dSclaeFactorY + (thisIndex.y * 70*dSclaeFactorY)));
+    float xOffset = (size.width - gameSettings->getGameRows() * 70 + symbol_w)/2 ;
+    float yOffset = (size.height - gameSettings->getGameRows() * 70 + symbol_h)/2;
+    return CCPointMake((xOffset + thisIndex.x * 70)*dScaleFactorX, (yOffset + thisIndex.y * 70)*dSclaeFactorY);
 }
+
 void GameEngine::glitch() {
    
     SyntaxSymbol *symbolToGlitch;
@@ -1663,7 +1682,7 @@ void GameEngine::ccTouchesMoved(CCSet* touches,CCEvent* event) {
                     }
                   
                     CCPoint posibleIndex = CCPointMake(thisSymbol->isIndex.x + direction.x, thisSymbol->isIndex.y + direction.y);
-                    if ((posibleIndex.x > -1) && (posibleIndex.x < 8) && (posibleIndex.y > -1) && (posibleIndex.y < 8)) {
+                    if ((posibleIndex.x > -1) && (posibleIndex.x < gameSettings->getGameRows()) && (posibleIndex.y > -1) && (posibleIndex.y < gameSettings->getGameRows())) {
                         temp_1 = (CCArray*)gameGrid->objectAtIndex(posibleIndex.x);
                         SyntaxSymbol *otherSymbol =(SyntaxSymbol*)temp_1->objectAtIndex(posibleIndex.y);
                         if (this->symbol(thisSymbol->isIndex,otherSymbol->isIndex)) {

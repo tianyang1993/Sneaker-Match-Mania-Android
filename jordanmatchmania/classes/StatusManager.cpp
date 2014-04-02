@@ -172,7 +172,7 @@ int StatusManager::rowsNeededForLevel(int thisLevel){
     return rows;
 }
 
-int StatusManager:: pointsNeededForLevel(int thisLevel ,GameMode thisGameMode) {
+int StatusManager:: pointsNeededForLevel(int thisLevel /*,GameMode thisGameMode*/) {
     int points = 0;
 //    switch (thisGameMode) {
 //        case kTagPrimary:

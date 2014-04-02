@@ -8,7 +8,7 @@
 
 #include "GameSetting.h"
 #include "SimpleAudioEngine.h"
-
+#include "ValuesManager.h"
 using namespace CocosDenshion;
 
 GameSettings* GameSettings::sharedGameSettings(){
@@ -173,7 +173,7 @@ void GameSettings::setCurrentLevel(int nLevel){
     CCUserDefault::sharedUserDefault()->setIntegerForKey("currentLevel", nLevel);
 }
 int GameSettings::getCurrentLevel(){
-    return CCUserDefault::sharedUserDefault()->getIntegerForKey("currentLevel");
+    return CCUserDefault::sharedUserDefault()->getIntegerForKey("currentLevel", 1);
 }
 
 ///\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -225,7 +225,21 @@ bool GameSettings:: isPlayed(){
     return CCUserDefault::sharedUserDefault()->getBoolForKey("played");
 }
 
+void GameSettings::setGameLives(int nLives){
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("gamelives", max_lives);
+}
 
+int GameSettings::getGameLives(){
+    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gamelives");
+}
+
+void GameSettings::setGameHighScore(int nHighScore){
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("gamehighscore", 0);
+}
+
+int GameSettings::getGameHighScore(){
+    return CCUserDefault::sharedUserDefault()->getIntegerForKey("gamehighscore");
+}
 
 
 

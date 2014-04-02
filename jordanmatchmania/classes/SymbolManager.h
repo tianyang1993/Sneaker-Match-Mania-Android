@@ -69,7 +69,9 @@ public:
     void            revealHiddenSymbol(SyntaxSymbol *thisSymbol);
     
     void            animHideSymbol(SyntaxSymbol *thisSymbol , float thisDelay);
-    
+
+    void            animHintSysmbol(SyntaxSymbol *thisSymbol, float thisDelay);
+    void            animIdleSysmbol(SyntaxSymbol *thisSymbol);
     void            animGlowSymbol(SyntaxSymbol *thisSymbol);
     void            animSparkSymbol(SyntaxSymbol *thisSymbol);
     

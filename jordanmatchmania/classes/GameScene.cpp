@@ -48,8 +48,8 @@ GameScene::~GameScene(){
     revmob->HideBanner();
     revmob = NULL;
 
-    gameSettings->setTimeBarScale(m_fTimeBarScale);
-    gameSettings->setProgressBarScale(m_fProgressBarScale);
+//    gameSettings->setTimeBarScale(m_fTimeBarScale);
+//    gameSettings->setProgressBarScale(m_fProgressBarScale);
     gameSettings->setCurrentLevel(m_nLevel);
     gameSettings->setGameScore(m_nGameScore);
     gameSettings->setTotalGameScore(m_nGameTotalScore);
@@ -88,63 +88,63 @@ void GameScene::initGame(){
      
 }
 
-void GameScene:: setBackGroundView(int nType){
-    
-    char file[0x90] = {0};
-    char file_h[0x90] = {0};
-    char file_f[0x90] = {0};
-    switch (nType) {
-        case 0:
-            sprintf(file, "background@2x.png");
-            sprintf(file_h, "b1_h.png");
-            sprintf(file_f, "b1_f.png");
-            break;
-        case 1:
-            sprintf(file, "iapbackground1@2x.png");
-            sprintf(file_h, "b2_h.png");
-            sprintf(file_f, "b2_f.png");
-            break;
-        case 2:
-            sprintf(file, "iapbackground2@2x.png");
-            sprintf(file_h, "b3_h.png");
-            sprintf(file_f, "b3_f.png");
-            break;
-        case 3:
-            sprintf(file, "iapbackground3@2x.png");
-            sprintf(file_h, "b4_h.png");
-            sprintf(file_f, "b4_f.png");
-            break;
-        case 4:
-            sprintf(file, "iapbackground4@2x.png");
-            sprintf(file_h, "b5_h.png");
-            sprintf(file_f, "b5_f.png");
-            break;
-            
-        default:
-            break;
-    }
-    
-    CCSprite* backgroundView = CCSprite::create(file);
-    backgroundView->setScaleX(size.width / backgroundView->getContentSize().width);
-    backgroundView->setScaleY(size.height / backgroundView->getContentSize().height);
-    backgroundView->setPosition(ccp(size.width / 2, size.height / 2));
-    addChild(backgroundView);
-    
-    CCSprite* backgroud_h = CCSprite::create(file_h);
-    backgroud_h->setScaleX(size.width / backgroud_h->getContentSize().width);
-    backgroud_h->setScaleY(backgroundView->getScaleY());
-    backgroud_h->setPosition(ccp(size.width / 2, size.height-backgroud_h->getContentSize().height / 2 * dScaleY + 5));
-    addChild(backgroud_h , 3);
-    
-    CCSprite* backgroud_f = CCSprite::create(file_f);
-    backgroud_f->setScaleX(size.width / backgroud_f->getContentSize().width);
-    backgroud_f->setScaleY(backgroundView->getScaleY());
-    backgroud_f->setPosition(ccp(size.width / 2, backgroud_f->getContentSize().height / 2 *dScaleY - 5));
-    addChild(backgroud_f , 3);
-
-    
-    
-}
+//void GameScene:: setBackGroundView(int nType){
+//    
+//    char file[0x90] = {0};
+//    char file_h[0x90] = {0};
+//    char file_f[0x90] = {0};
+//    switch (nType) {
+//        case 0:
+//            sprintf(file, "background@2x.png");
+//            sprintf(file_h, "b1_h.png");
+//            sprintf(file_f, "b1_f.png");
+//            break;
+//        case 1:
+//            sprintf(file, "iapbackground1@2x.png");
+//            sprintf(file_h, "b2_h.png");
+//            sprintf(file_f, "b2_f.png");
+//            break;
+//        case 2:
+//            sprintf(file, "iapbackground2@2x.png");
+//            sprintf(file_h, "b3_h.png");
+//            sprintf(file_f, "b3_f.png");
+//            break;
+//        case 3:
+//            sprintf(file, "iapbackground3@2x.png");
+//            sprintf(file_h, "b4_h.png");
+//            sprintf(file_f, "b4_f.png");
+//            break;
+//        case 4:
+//            sprintf(file, "iapbackground4@2x.png");
+//            sprintf(file_h, "b5_h.png");
+//            sprintf(file_f, "b5_f.png");
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
+//    CCSprite* backgroundView = CCSprite::create(file);
+//    backgroundView->setScaleX(size.width / backgroundView->getContentSize().width);
+//    backgroundView->setScaleY(size.height / backgroundView->getContentSize().height);
+//    backgroundView->setPosition(ccp(size.width / 2, size.height / 2));
+//    addChild(backgroundView);
+//    
+//    CCSprite* backgroud_h = CCSprite::create(file_h);
+//    backgroud_h->setScaleX(size.width / backgroud_h->getContentSize().width);
+//    backgroud_h->setScaleY(backgroundView->getScaleY());
+//    backgroud_h->setPosition(ccp(size.width / 2, size.height-backgroud_h->getContentSize().height / 2 * dScaleY + 5));
+//    addChild(backgroud_h , 3);
+//    
+//    CCSprite* backgroud_f = CCSprite::create(file_f);
+//    backgroud_f->setScaleX(size.width / backgroud_f->getContentSize().width);
+//    backgroud_f->setScaleY(backgroundView->getScaleY());
+//    backgroud_f->setPosition(ccp(size.width / 2, backgroud_f->getContentSize().height / 2 *dScaleY - 5));
+//    addChild(backgroud_f , 3);
+//
+//    
+//    
+//}
 
 #pragma mark GET GAME INFO 
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -162,13 +162,14 @@ void GameScene:: initGameInfo(){
     
 //    allPopUps = new CCArray();
    
+    m_nClock = level_clock;
     m_nRowsNeedForLevel = gameSettings->getGameRows();
     m_nGameScore        = gameSettings->getGameScore();
     m_nGameTotalScore   = gameSettings->getTotalGameScore();
-    m_nGameMode         = gameSettings->getGameMode();
-    m_fProgressBarScale = gameSettings->getProgressBarScale();
-    m_fTimeBarScale     = gameSettings->getTimeBarScale();
-    m_nByteCount        = gameSettings->getByteCount();
+//    m_nGameMode         = gameSettings->getGameMode();
+//    m_fProgressBarScale = gameSettings->getProgressBarScale();
+//    m_fTimeBarScale     = gameSettings->getTimeBarScale();
+//    m_nByteCount        = gameSettings->getByteCount();
     m_nLevel            = gameSettings->getCurrentLevel();
     alert = NULL;
     
@@ -180,17 +181,17 @@ void GameScene:: initGameInfo(){
         m_nGameTotalScore = 0;
     }
     
-    if (m_nLevel == 0) {
-        m_nLevel =1;
-    }
-    if (m_fProgressBarScale == 0) {
-        m_fProgressBarScale = 0.0001*dScaleX;
-    }
-    if (m_fTimeBarScale == 0) {
-        m_fTimeBarScale = 1.12*dScaleX;
-    }
+//    if (m_nLevel == 0) {
+//        m_nLevel =1;
+//    }
+//    if (m_fProgressBarScale == 0) {
+//        m_fProgressBarScale = 0.0001*dScaleX;
+//    }
+//    if (m_fTimeBarScale == 0) {
+//        m_fTimeBarScale = 1.12*dScaleX;
+//    }
     
-    m_nPointsNeedForLevel = statusManager->pointsNeededForLevel(m_nLevel, m_nGameMode);
+    m_nPointsNeedForLevel = statusManager->pointsNeededForLevel(m_nLevel/*, m_nGameMode*/);
     m_nRowsNeedForLevel = statusManager->rowsNeededForLevel(m_nLevel);
     //setBackGroundView(gameSettings->getBackground());
     
@@ -241,7 +242,7 @@ void GameScene:: initGameInfo(){
     CCMenu* menu = CCMenu::create(exitButton,hintButton,NULL);
     menu->setPosition(CCPointZero);
     addChild(menu);
-
+    
     playBgMusic();
 }
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -251,27 +252,27 @@ void GameScene:: initGameInfo(){
 void GameScene::initmenu(){
     
     unschedule(schedule_selector(GameScene::initmenu));
-    schedule(schedule_selector(GameScene::showBaner), 3.0f);
+    //schedule(schedule_selector(GameScene::showBaner), 3.0f);
     
-    char barName[0x50] = {0};
-    char titleLabel[0x50] = {0};
+//    char barName[0x50] = {0};
+//    char titleLabel[0x50] = {0};
     m_nEngine->levelCompleted = false;
-    if (m_nGameMode == kTagPrimary) {
-        sprintf(barName, "progressBarP@2x.png");
-        sprintf(titleLabel, "LEVELS MODE");
-    }else if(m_nGameMode == kTagTime){
-        sprintf(barName, "progressBarT@2x.png");
+//    if (m_nGameMode == kTagPrimary) {
+//        sprintf(barName, "progressBarP@2x.png");
+//        sprintf(titleLabel, "LEVELS MODE");
+//    }else if(m_nGameMode == kTagTime){
+//        sprintf(barName, "progressBarT@2x.png");
 //        timeBar = CCSprite::create("progressBarBackTimer@2x.png");
 //        timeBar->setPosition(ccp(45*dScaleX, size.height - 60*dScaleY));
 //        timeBar->setScaleX(m_fTimeBarScale);
 //        timeBar->setAnchorPoint(ccp(0.0f, 0.5f));
 //        timeBar->setScaleY(timeBar->getScaleY()*dScaleY*1.15);
 //        addChild(timeBar , 4);
-        sprintf(titleLabel, "TIME MODE");
-    }else{
-        sprintf(barName, "progressBarP@2x.png");
-        sprintf(titleLabel, "ENDLESS MODE");
-    }
+//        sprintf(titleLabel, "TIME MODE");
+//    }else{
+//        sprintf(barName, "progressBarP@2x.png");
+//        sprintf(titleLabel, "ENDLESS MODE");
+//    }
     
 //    
 //    
@@ -306,6 +307,20 @@ void GameScene::initmenu(){
     scoreLabel->setScaleY(1.2f*dScaleY);
     scoreLabel->setScaleX(0.8f*dScaleX);
     addChild(scoreLabel,4);
+
+    sprintf(file, "%d" , max_lives);
+    livesLabel = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
+    livesLabel->setPosition(ccp(120, getY(size.height, 49, 40)));
+    livesLabel->setScaleY(1.2f*dScaleY);
+    livesLabel->setScaleX(0.8f*dScaleX);
+    addChild(livesLabel,4);
+
+    sprintf(file, "%d" , m_nClock);
+    clockLabel = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
+    clockLabel->setPosition(ccp(500, getY(size.height, 49, 40)));
+    clockLabel->setScaleY(1.2f*dScaleY);
+    clockLabel->setScaleX(0.8f*dScaleX);
+    addChild(clockLabel,4);
     
 //    sprintf(file , "LEVEL : %d", m_nLevel);
 //    levelLabel = CCLabelTTF::createWithFontDefinition(file, strokeTextDef);
@@ -396,11 +411,12 @@ void GameScene::initmenu(){
 //    AnalyticX::flurryLogEvent("Prompt Used");
     
 }
-void GameScene::showBaner(){
-    this->unschedule(schedule_selector(GameScene::showBaner));
-    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-    revmob->ShowBanner();
-}
+
+//void GameScene::showBaner(){
+//    this->unschedule(schedule_selector(GameScene::showBaner));
+//    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+//    revmob->ShowBanner();
+//}
 
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #pragma mark - MENU ACTION
@@ -415,185 +431,185 @@ void GameScene::onClickHint(){
     
 }
 
-void GameScene:: onClueBtn(cocos2d::CCObject *pSender){
+//void GameScene:: onClueBtn(cocos2d::CCObject *pSender){
+//
+//    if (byteManager->prompts > 0) {
+//        gameSettings->playSound((char*)"SFX-ProptButton.wav");
+//        if (m_nEngine->didFindHint()) {
+//            if (byteManager->prompts > 0) {
+////                byteManager->usePackItem(3,promptButton);
+//                if (byteManager->prompts == 0) {
+////                    clueButton->stopAllActions();
+////                    clueButton->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
+//                    }
+//
+//                AnalyticX::flurryLogEvent("Penalty Free Prompt Used");
+// 
+//            }
+//            else {
+//                if (m_nGameScore >= 100) {
+//                    setGameScore(-100);
+//                }
+//                AnalyticX::flurryLogEvent("Prompt Used");
+//                 
+//            }
+//        }
+//        else {
+//            //no moves
+//            gameSettings->playSound((char*)"SFX-NoMatch.wav");
+//            alert = CCAlertView::create( "Clues","No More Moves!","Ok", NULL, this, callfuncO_selector(GameScene::popupRemoveParticleNO), callfuncO_selector(GameScene::popupRemoveParticleYES));
+//            this->addChild(alert, 100);
+//
+//            }
+//    }
+//    else {
+//        //no prompts
+//        gameSettings->playSound((char*)"SFX-NoMatch.wav");
+//       
+//        if(byteManager->prompts <= 0){
+////            clueButton->stopAllActions();
+////            clueButton->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
+//            if (!alert) {
+//                showPurchaseAlert(kPurchClue);
+//                
+//            }
+//
+//            //        [self updateScore];
+//
+//        }
+//        
+//
+//    }
+//
+//}
+//void GameScene:: onChameLeonsBtn(cocos2d::CCObject *pSender){
+//   
+//    SyntaxSymbol* temp = m_nEngine->firstTouchedSymbol;
+//    if (temp == NULL) {
+//        return;
+//    }
+//   
+//    if ((temp->isOfType < 7) & (byteManager->wildcards > 0)) {
+//        gameSettings->playSound((char*)"SFX-WildcardMorph.wav");
+//        m_nEngine->buyWildcard();
+////        byteManager->usePackItem(1,wildcardButton);
+//        AnalyticX::flurryLogEvent("Turn To Wildcard");
+//         
+//        
+//        CCLog("Count Count ==%d" , byteManager->wildcards);
+//        if (byteManager->wildcards == 0){
+////            chameleons->stopAllActions();
+////            chameleons->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 50) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
+//        }
+//        
+//    }
+//    else {
+//        gameSettings->playSound((char*)"SFX-NoMatch.wav");
+//        if(byteManager->wildcards <= 0){
+//           showPurchaseAlert(kPurchChamel);
+//            
+//        }
+//        
+//    }
+//
+//    
+//}
+//
+//void GameScene::onMenuBtn(cocos2d::CCObject *pSender){
+//    
+//    this->setTouchEnabled(false);
+//    pauseLayer = PauseLayer::pause();
+//    pauseLayer->initWithGame(this);
+//    this->addChild(pauseLayer , 10);
+//     
+//}
+//void GameScene:: onPowerUpBtn(cocos2d::CCObject *pSender){
+//    
+//    
+//    gameSettings->setSuperType(1);
+//    CCDirector::sharedDirector()->replaceScene(TokenBuy::scene());
+//    
+//    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+//    revmob->HideBanner();
+//    revmob = NULL;
+//
+////    TokenBuy* token = TokenBuy::body();
+////    addChild(token,10);
+//    
+//    
+//}
+//
+//void GameScene:: onGameOverBtn(cocos2d::CCObject *pSender){
+//    
+//}
+//
+//void GameScene:: onPlatyTrapBtn(cocos2d::CCObject *pSender){
+//    
+//    SyntaxSymbol* temp = m_nEngine->firstTouchedSymbol;
+//    if (temp == NULL) {
+//        return;
+//    }
+//    if ((temp->isOfType == 9) && (byteManager->rectifiers > 0)) {
+//        gameSettings->playSound((char*)"SFX-Rectify.wav");
+//        m_nEngine->rectify();
+////        byteManager->usePackItem(2,rectifyButton);
+//        if (byteManager->rectifiers == 0) {
+////            platyTrap->stopAllActions();
+////            platyTrap->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
+//
+//        }
+//        AnalyticX::flurryLogEvent("Rectifier Used");
+//         
+//    }
+//     else {
+//        gameSettings->playSound((char*)"SFX-NoMatch.wav");
+//        if(byteManager->rectifiers <= 0)
+//             showPurchaseAlert(kPurchPlat);
+//         
+//    }
+//}
+//
+//void GameScene:: onReshuffleBtn(cocos2d::CCObject *pSender){
+//    
+//    
+//}
+//void GameScene:: onPowerBtn(cocos2d::CCObject *pSender){
+//    
+//    
+//}
 
-    if (byteManager->prompts > 0) {
-        gameSettings->playSound((char*)"SFX-ProptButton.wav");
-        if (m_nEngine->didFindHint()) {
-            if (byteManager->prompts > 0) {
-//                byteManager->usePackItem(3,promptButton);
-                if (byteManager->prompts == 0) {
-//                    clueButton->stopAllActions();
-//                    clueButton->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
-                    }
-
-                AnalyticX::flurryLogEvent("Penalty Free Prompt Used");
- 
-            }
-            else {
-                if (m_nGameScore >= 100) {
-                    setGameScore(-100);
-                }
-                AnalyticX::flurryLogEvent("Prompt Used");
-                 
-            }
-        }
-        else {
-            //no moves
-            gameSettings->playSound((char*)"SFX-NoMatch.wav");
-            alert = CCAlertView::create( "Clues","No More Moves!","Ok", NULL, this, callfuncO_selector(GameScene::popupRemoveParticleNO), callfuncO_selector(GameScene::popupRemoveParticleYES));
-            this->addChild(alert, 100);
-
-            }
-    }
-    else {
-        //no prompts
-        gameSettings->playSound((char*)"SFX-NoMatch.wav");
-       
-        if(byteManager->prompts <= 0){
-//            clueButton->stopAllActions();
-//            clueButton->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
-            if (!alert) {
-                showPurchaseAlert(kPurchClue);
-                
-            }
-
-            //        [self updateScore];
-
-        }
-        
-
-    }
-
-}
-void GameScene:: onChameLeonsBtn(cocos2d::CCObject *pSender){
-   
-    SyntaxSymbol* temp = m_nEngine->firstTouchedSymbol;
-    if (temp == NULL) {
-        return;
-    }
-   
-    if ((temp->isOfType < 7) & (byteManager->wildcards > 0)) {
-        gameSettings->playSound((char*)"SFX-WildcardMorph.wav");
-        m_nEngine->buyWildcard();
-//        byteManager->usePackItem(1,wildcardButton);
-        AnalyticX::flurryLogEvent("Turn To Wildcard");
-         
-        
-        CCLog("Count Count ==%d" , byteManager->wildcards);
-        if (byteManager->wildcards == 0){
-//            chameleons->stopAllActions();
-//            chameleons->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 50) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
-        }
-        
-    }
-    else {
-        gameSettings->playSound((char*)"SFX-NoMatch.wav");
-        if(byteManager->wildcards <= 0){
-           showPurchaseAlert(kPurchChamel);
-            
-        }
-        
-    }
-
-    
-}
-
-void GameScene::onMenuBtn(cocos2d::CCObject *pSender){
-    
-    this->setTouchEnabled(false);
-    pauseLayer = PauseLayer::pause();
-    pauseLayer->initWithGame(this);
-    this->addChild(pauseLayer , 10);
-     
-}
-void GameScene:: onPowerUpBtn(cocos2d::CCObject *pSender){
-    
-    
-    gameSettings->setSuperType(1);
-    CCDirector::sharedDirector()->replaceScene(TokenBuy::scene());
-    
-    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-    revmob->HideBanner();
-    revmob = NULL;
-
-//    TokenBuy* token = TokenBuy::body();
-//    addChild(token,10);
-    
-    
-}
-
-void GameScene:: onGameOverBtn(cocos2d::CCObject *pSender){
-    
-}
-
-void GameScene:: onPlatyTrapBtn(cocos2d::CCObject *pSender){
-    
-    SyntaxSymbol* temp = m_nEngine->firstTouchedSymbol;
-    if (temp == NULL) {
-        return;
-    }
-    if ((temp->isOfType == 9) && (byteManager->rectifiers > 0)) {
-        gameSettings->playSound((char*)"SFX-Rectify.wav");
-        m_nEngine->rectify();
-//        byteManager->usePackItem(2,rectifyButton);
-        if (byteManager->rectifiers == 0) {
-//            platyTrap->stopAllActions();
-//            platyTrap->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1.0f, 100) , CCDelayTime::create(0.5f), CCFadeTo::create(1.0f, 255) , NULL)));
-
-        }
-        AnalyticX::flurryLogEvent("Rectifier Used");
-         
-    }
-     else {
-        gameSettings->playSound((char*)"SFX-NoMatch.wav");
-        if(byteManager->rectifiers <= 0)
-             showPurchaseAlert(kPurchPlat);
-         
-    }
-}
-
-void GameScene:: onReshuffleBtn(cocos2d::CCObject *pSender){
-    
-    
-}
-void GameScene:: onPowerBtn(cocos2d::CCObject *pSender){
-    
-    
-}
-
-void GameScene::showPurchaseAlert(int num){
-    
-    currentAlert = num;
-    char caption[0x50] = {0};
-   
-    if(num == kPurchPlat)
-         sprintf(caption,"Would you like to buy 1000 tokens for $1.99 and get 5 Platypus Traps?");
-    if(num == kPurchChamel)
-        sprintf(caption,"Would you like to buy 500 tokens for $.99 and get 5 Chameleons?");
-         
-    if(num == kPurchClue)
-        sprintf(caption,"Would you like to buy 500 tokens for $.99 and get 10 Hints?");
-    
-    
-    CCAlertView *alert = CCAlertView::create( "Get More",caption,"Cancel", "Get!", this, callfuncO_selector(GameScene::popupRemoveParticleNO), callfuncO_selector(GameScene::popupRemoveParticleYES));
-    this->addChild(alert, 100);
- 
-    
-
-}
-
-void GameScene::popupRemoveParticleNO(cocos2d::CCObject *pSender){
-    
-    CCAlertView* alert = (CCAlertView*) pSender;
-    this->removeChild(alert, true);
- 
-}
-
-void GameScene::popupRemoveParticleYES(cocos2d::CCObject *pSender){
-     
-    
-}
+//void GameScene::showPurchaseAlert(int num){
+//    
+//    currentAlert = num;
+//    char caption[0x50] = {0};
+//   
+//    if(num == kPurchPlat)
+//         sprintf(caption,"Would you like to buy 1000 tokens for $1.99 and get 5 Platypus Traps?");
+//    if(num == kPurchChamel)
+//        sprintf(caption,"Would you like to buy 500 tokens for $.99 and get 5 Chameleons?");
+//         
+//    if(num == kPurchClue)
+//        sprintf(caption,"Would you like to buy 500 tokens for $.99 and get 10 Hints?");
+//    
+//    
+//    CCAlertView *alert = CCAlertView::create( "Get More",caption,"Cancel", "Get!", this, callfuncO_selector(GameScene::popupRemoveParticleNO), callfuncO_selector(GameScene::popupRemoveParticleYES));
+//    this->addChild(alert, 100);
+// 
+//    
+//
+//}
+//
+//void GameScene::popupRemoveParticleNO(cocos2d::CCObject *pSender){
+//    
+//    CCAlertView* alert = (CCAlertView*) pSender;
+//    this->removeChild(alert, true);
+// 
+//}
+//
+//void GameScene::popupRemoveParticleYES(cocos2d::CCObject *pSender){
+//     
+//    
+//}
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #pragma mark - SET GAMESCORE 
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -634,7 +650,12 @@ void GameScene:: showLevelCompleted(){
     m_nEngine->clearInfoPopUps();
     m_nEngine->clearGame();
     m_nGameScore = 0;
-    schedule(schedule_selector(GameScene::decreaseProgressBar), 0.001f);
+    
+    levelCompleted = LevelCompleted::layer();
+    levelCompleted->initWithGame(this);
+    this->addChild(levelCompleted , 5);
+
+//    schedule(schedule_selector(GameScene::decreaseProgressBar), 0.001f);
     
 }
 
@@ -644,7 +665,7 @@ void GameScene:: showNextLevel(){
     gameSettings->setCurrentLevel(m_nLevel);
     gameSettings->setProgressBarScale(0.0f);
     gameSettings->setTimeBarScale(1.12*dScaleX);
-    gameSettings->setByteCount(m_nByteCount);
+//    gameSettings->setByteCount(m_nByteCount);
     gameSettings->setGameScore(m_nGameScore);
 
     m_nLevel++;
@@ -653,7 +674,7 @@ void GameScene:: showNextLevel(){
 //    levelLabel->setString((char*)file);
     sprintf(file, "%d" , m_nGameScore);
     scoreLabel->setString((char*)file);
-    sprintf(file , "%d", m_nByteCount);
+//    sprintf(file , "%d", m_nByteCount);
 //    bytesCounter->setString((char*)file);
     
      
@@ -663,19 +684,17 @@ void GameScene:: showNextLevel(){
 
     playBgMusic();
     
-    m_fProgressBarScale = 0.0001*dScaleX;
-    m_fTimeBarScale = 1.12*dScaleX;
-    if (m_nGameMode == kTagPrimary) {
+//    m_fProgressBarScale = 0.0001*dScaleX;
+//    m_fTimeBarScale = 1.12*dScaleX;
+//    if (m_nGameMode == kTagPrimary) {
 //        progressBar->setScaleX(m_fProgressBarScale);
-    }else if(m_nGameMode == kTagTime){
+//    }else if(m_nGameMode == kTagTime){
 //        timeBar->setScaleX(m_fTimeBarScale);
-    }
+//    }
     
     
     m_nEngine->resetGame();
     symbolManager->updateProbabilities();
-
-
 }
 
 void GameScene:: showGameOver(){
@@ -705,17 +724,17 @@ void GameScene:: restartLevel(){
     gameSettings->setCurrentLevel(m_nLevel);
     gameSettings->setProgressBarScale(0.0f);
     gameSettings->setTimeBarScale(1.12*dScaleX);
-    gameSettings->setByteCount(m_nByteCount);
+//    gameSettings->setByteCount(m_nByteCount);
     gameSettings->setGameScore(m_nGameScore);
     
-    m_fProgressBarScale = 0.0001*dScaleX;
-    m_fTimeBarScale = 1.12*dScaleX;
+//    m_fProgressBarScale = 0.0001*dScaleX;
+//    m_fTimeBarScale = 1.12*dScaleX;
     
-    if (m_nGameMode == kTagPrimary) {
+//    if (m_nGameMode == kTagPrimary) {
 //        progressBar->setScaleX(m_fProgressBarScale);
-    }else if(m_nGameMode == kTagTime){
+//    }else if(m_nGameMode == kTagTime){
 //        timeBar->setScaleX(m_fTimeBarScale);
-    }
+//    }
     
     m_nEngine->resetGame();
     symbolManager->updateProbabilities();
@@ -725,47 +744,47 @@ void GameScene:: restartLevel(){
 #pragma mark - BAR ACTION
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
-void GameScene::increaseProgressBar(int nScore){
-    
-    m_fProgressBarScale += (m_fFirstScale / m_nPointsNeedForLevel)*nScore;
-    if (m_fProgressBarScale > m_fFirstScale) return;
+//void GameScene::increaseProgressBar(int nScore){
+
+//    m_fProgressBarScale += (m_fFirstScale / m_nPointsNeedForLevel)*nScore;
+//    if (m_fProgressBarScale > m_fFirstScale) return;
     
 //    progressBar->setScaleX(m_fProgressBarScale);
     
-}
+//}
 
-void GameScene::decreaseProgressBar(float dt){
-    
-    m_fProgressBarScale -= 0.05f;
-    
-    if (m_fProgressBarScale < 0.0f) {
-        m_fProgressBarScale = 0.0f;
+//void GameScene::decreaseProgressBar(float dt){
+//    
+//    m_fProgressBarScale -= 0.05f;
+//    
+//    if (m_fProgressBarScale < 0.0f) {
+//        m_fProgressBarScale = 0.0f;
 //        progressBar->setScaleX(m_fProgressBarScale);
-        unschedule(schedule_selector(GameScene::decreaseProgressBar));
-        levelCompleted = LevelCompleted::layer();
-        levelCompleted->initWithGame(this);
-        this->addChild(levelCompleted , 5);
-         
-        return;
-    }
+//        unschedule(schedule_selector(GameScene::decreaseProgressBar));
+//        levelCompleted = LevelCompleted::layer();
+//        levelCompleted->initWithGame(this);
+//        this->addChild(levelCompleted , 5);
+//         
+//        return;
+//    }
 //    progressBar->setScaleX(m_fProgressBarScale);
-    
-}
-
-void GameScene:: decreaseTimeBar(float dt){
-    
-    m_fTimeBarScale -= 0.001f;
-    if (m_fTimeBarScale < 0.0f) {
-        unschedule(schedule_selector(GameScene::decreaseTimeBar));
-        /*if (progressBar->getScaleX() < 1.0f)*/ {
-            m_nGameScore = 0;
-            showGameOver();
-           
-        }
-        return;
-    }
+//    
+//}
+//
+//void GameScene:: decreaseTimeBar(float dt){
+//    
+//    m_fTimeBarScale -= 0.001f;
+//    if (m_fTimeBarScale < 0.0f) {
+//        unschedule(schedule_selector(GameScene::decreaseTimeBar));
+//        /*if (progressBar->getScaleX() < 1.0f)*/ {
+//            m_nGameScore = 0;
+//            showGameOver();
+//           
+//        }
+//        return;
+//    }
 //    timeBar->setScaleX(m_fTimeBarScale);
-}
+//}
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #pragma mark - GAMEOVER 
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -801,16 +820,16 @@ void GameScene::proposeReshuffle(){
     
 }
 
-void GameScene::onEndGame(cocos2d::CCObject *pSender){
-    
-    CCDirector::sharedDirector()->replaceScene(MainView::scene());
-}
-
-void GameScene::onReshuffle(cocos2d::CCObject *pSender){
-    
-//    CCDirector::sharedDirector()->replaceScene(TokenBuy::scene());
-    
-}
+//void GameScene::onEndGame(cocos2d::CCObject *pSender){
+//    
+//    CCDirector::sharedDirector()->replaceScene(MainView::scene());
+//}
+//
+//void GameScene::onReshuffle(cocos2d::CCObject *pSender){
+//    
+////    CCDirector::sharedDirector()->replaceScene(TokenBuy::scene());
+//    
+//}
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #pragma mark - POPUP CHECK
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

@@ -39,7 +39,7 @@ public:
     
     //Values Manager
     int         rowsNeededForLevel(int thisLevel);
-    int         pointsNeededForLevel(int thisLevel ,GameMode thisGameMode);
+    int         pointsNeededForLevel(int thisLevel /*,GameMode thisGameMode*/);
     int         wildcardProbabilityForLevel(int thisLevel);
     int         shifterProbabilityForLevel(int thisLevel);
     int         corruptedProbabilityForLevel(int thisLevel);

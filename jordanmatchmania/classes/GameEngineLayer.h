@@ -122,6 +122,7 @@ public:
     
     void rectifySearch();//customize
     void searchPatterns();
+    void searchPatternTShapeForSymbol(SyntaxSymbol *thisSymbol);
     void searchPatternLShapeForSymbol(SyntaxSymbol *thisSymbol);
     void searchPatternHorizontalForSymbol(SyntaxSymbol *thisSymbol);
     void searchPatternVerticalForSymbol(SyntaxSymbol *thisSymbol);

@@ -29,7 +29,7 @@ public:
     
     GameScene* m_nGameScene;
    
-    void ccTouchesBegan(CCSet* touches,CCEvent* event);
+//    void ccTouchesBegan(CCSet* touches,CCEvent* event);
     CREATE_FUNC(LevelCompleted);
     
 };

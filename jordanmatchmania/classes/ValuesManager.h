@@ -51,6 +51,12 @@ USING_NS_CC;
 #define anim_spark_frames       8
 #define anim_clear_frames       10
 
+#define max_lives                   3
+#define level_clock                 30
+
+#define symbol_w                70
+#define symbol_h                70
+
 //#define USE_TESTFLIGHT //comment it on release
 
 //#ifdef USE_TESTFLIGHT

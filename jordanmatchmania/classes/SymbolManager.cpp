@@ -100,8 +100,37 @@ SyntaxSymbol* SymbolManager::randomSymbolWithMaxType(int maxTypes) {
 
     char file[0x50] = {0};
     
+    
     i = arc4random() % maxTypes;
     sprintf(file, "symbol%d-idle0@2x.png" , i);
+    
+    switch (i) {
+        case 0:
+            CCLOG("blue");
+            
+            break;
+        case 1:
+            CCLOG("orange");
+            
+            break;
+        case 2:
+            CCLOG("green");
+            
+            break;
+        case 3:
+            CCLOG("brown");
+            
+            break;
+        case 4:
+            CCLOG("yellow");
+            
+            break;
+        case 5:
+            CCLOG("red");
+            
+            break;
+    }
+    
     newSymbol->initWithFile(file);
 
 //    if (i == 8) {
@@ -163,7 +192,7 @@ SyntaxSymbol* SymbolManager::randomSymbolWithMaxType(int maxTypes) {
 }
 
 SyntaxSymbol* SymbolManager::symbolWithType(int thisType) {
-    CCLOG("symbolWithType type ==%d" , thisType);
+    //CCLOG("symbolWithType type ==%d" , thisType);
     SyntaxSymbol *newSymbol = SyntaxSymbol::body();
     char file[0x50] ={0};
 //    sprintf(file, "symbol%d@2x.png" , thisType);
@@ -175,7 +204,7 @@ SyntaxSymbol* SymbolManager::symbolWithType(int thisType) {
 }
 
 SyntaxSymbol* SymbolManager::symbolWithIsOfType(int isOfType) {
-    CCLOG("symbolWithIsOfType type ==%d" , isOfType);
+    //CCLOG("symbolWithIsOfType type ==%d" , isOfType);
     SyntaxSymbol *newSymbol = SyntaxSymbol::body();
     size = CCDirector::sharedDirector()->getWinSize();
     dScaleX = size.width / 640,dScaleY = size.height / 1024;
@@ -246,7 +275,7 @@ SyntaxSymbol* SymbolManager::symbolWithIsOfType(int isOfType) {
  
  
 void SymbolManager:: turnToExplosiveSymbol(SyntaxSymbol* thisSymbol) {
-    CCLOG("turnToExplosiveSymbol type ==%d" , thisSymbol->isOfType);
+    //CCLOG("turnToExplosiveSymbol type ==%d" , thisSymbol->isOfType);
     
     if (thisSymbol->isShifter) {
         thisSymbol->isShifter = false;
@@ -272,7 +301,7 @@ void SymbolManager:: turnToExplosiveSymbol(SyntaxSymbol* thisSymbol) {
 
 void SymbolManager::turnToSuperSymbol(SyntaxSymbol* thisSymbol) {
     
-    CCLOG("turnToSuperSymbol type ==%d" , thisSymbol->isOfType);
+    //CCLOG("turnToSuperSymbol type ==%d" , thisSymbol->isOfType);
 
     if (thisSymbol->isShifter) {
         thisSymbol->isShifter = false;
@@ -298,7 +327,7 @@ void SymbolManager::turnToSuperSymbol(SyntaxSymbol* thisSymbol) {
 
 void SymbolManager::turnToWildcardSymbol(SyntaxSymbol* thisSymbol) {
     
-    CCLOG("turnToWildcardSymbol type ==%d" , thisSymbol->isOfType);
+    //CCLOG("turnToWildcardSymbol type ==%d" , thisSymbol->isOfType);
     thisSymbol->isShifter = false;
     thisSymbol->isExplosive = false;
     thisSymbol->isKeepable = true;
@@ -318,7 +347,7 @@ void SymbolManager::rectifyCorruptedSymbol(SyntaxSymbol* thisSymbol) {
 
 void SymbolManager:: shiftSymbol(SyntaxSymbol* thisSymbol ,int thisType) {
     
-    CCLOG("shiftSymbol old type == %d, new type = %d" , thisSymbol->isOfType, thisType );
+    //CCLOG("shiftSymbol old type == %d, new type = %d" , thisSymbol->isOfType, thisType );
 
     char file[0x50] = {0};
 //    sprintf(file, "symbol%d@2x.png" , thisType);
@@ -369,10 +398,48 @@ void SymbolManager ::revealHiddenSymbol(SyntaxSymbol* thisSymbol) {
     thisSymbol->removeFromParent();
     thisSymbol = NULL;
     gameEngine->newSymbolMake(pos);
- 
 }
 
 #pragma animations/////////////////////////////////
+
+void SymbolManager::animHintSysmbol(SyntaxSymbol *thisSymbol, float thisDelay){
+    CCAnimation* temp = CCAnimation::create();
+    
+    for (int i = 0; i < anim_movement_frames; i++) {
+        char file[0x50] = {0};
+        sprintf(file, "symbol%d-move%d@2x.png" , thisSymbol->isOfType, i);
+        temp->addSpriteFrameWithFileName(file);
+    }
+    
+    temp->setLoops(-1);
+    temp->setDelayPerUnit(thisDelay);
+    CCAnimate* ani = CCAnimate::create(temp);
+    
+    thisSymbol->runAction(ani);
+    
+    temp = NULL;
+    ani = NULL;
+    
+}
+
+void SymbolManager::animIdleSysmbol(SyntaxSymbol *thisSymbol){
+    CCAnimation* temp = CCAnimation::create();
+    
+    for (int i = 0; i < anim_idle_frames; i++) {
+        char file[0x50] = {0};
+        sprintf(file, "symbol%d-idle%d@2x.png" , thisSymbol->isOfType, i);
+        temp->addSpriteFrameWithFileName(file);
+    }
+    
+    temp->setLoops(-1);
+    temp->setDelayPerUnit(0.1f);
+    CCAnimate* ani = CCAnimate::create(temp);
+    
+    thisSymbol->runAction(ani);
+    
+    temp = NULL;
+    ani = NULL;
+}
 
 void SymbolManager:: animHideSymbol(SyntaxSymbol *thisSymbol,float thisDelay) {
     
@@ -611,7 +678,7 @@ void SymbolManager::DieAnimation(CCObject *pSender){
 
 void SymbolManager::animRectifySymbol(SyntaxSymbol *thisSymbol) {
     
-    CCLOG("animRectifySymbol type = %d", thisSymbol->isOfType);
+    //CCLOG("animRectifySymbol type = %d", thisSymbol->isOfType);
     rectifySymbolMorphFrames = CCAnimation::create();
     for (int i =0 ; i< 31; i++) {
         char file[0x50] = {0};
