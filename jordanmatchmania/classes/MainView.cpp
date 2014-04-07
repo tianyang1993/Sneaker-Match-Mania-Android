@@ -96,7 +96,6 @@ bool MainView::init(){
     spAdBanner->setScaleX(scale_x);
     spAdBanner->setScaleY(scale_y);
     addChild(spAdBanner);
-
     
     CCMenuItemImage *facebookButton = CCMenuItemImage::create("Button_FBLOGIN@2x.png", "Button_FBLOGIN_hit@2x.png", this, menu_selector(MainView::onClickFacebookButton));
     facebookButton->setPosition(ccp(size.width / 2, getY(size.height, 132, 596)));
@@ -104,7 +103,7 @@ bool MainView::init(){
     facebookButton->setScaleY(scale_y);
 
     CCMenuItemImage *guestButton = CCMenuItemImage::create("Button_GUEST@2x.png", "Button_GUEST_hit@2x.png", this, menu_selector(MainView::onClickGuestButton));
-    guestButton->setPosition(ccp(size.width / 2, getY(size.height, 132, 756)));
+    guestButton->setPosition(ccp(size.width / 2, getY(size.height, 132, 730)));
     guestButton->setScaleX(scale_x);
     guestButton->setScaleY(scale_y);
     
