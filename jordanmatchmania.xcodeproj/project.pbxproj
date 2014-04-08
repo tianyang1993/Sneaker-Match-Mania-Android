@@ -429,6 +429,7 @@
 		84EBA3DF18E70C9100AC5AA5 /* symbol5-spark5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EBA2BF18E70C9100AC5AA5 /* symbol5-spark5@2x.png */; };
 		84EBA3E018E70C9100AC5AA5 /* symbol5-spark6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EBA2C018E70C9100AC5AA5 /* symbol5-spark6@2x.png */; };
 		84EBA3E118E70C9100AC5AA5 /* symbol5-spark7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EBA2C118E70C9100AC5AA5 /* symbol5-spark7@2x.png */; };
+		84FD4BFE18F37CEE006A17BA /* CCHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */; };
 		C30FB254186AC34900D12C9B /* ChartboostX_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C30FB24D186AC34900D12C9B /* ChartboostX_ios.mm */; };
 		C30FB256186AC34900D12C9B /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C30FB250186AC34900D12C9B /* libChartboost.a */; };
 		C33DAC031862B85400D30D14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33DAC021862B85400D30D14 /* QuartzCore.framework */; };
@@ -1435,6 +1436,8 @@
 		84EBA2BF18E70C9100AC5AA5 /* symbol5-spark5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "symbol5-spark5@2x.png"; sourceTree = "<group>"; };
 		84EBA2C018E70C9100AC5AA5 /* symbol5-spark6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "symbol5-spark6@2x.png"; sourceTree = "<group>"; };
 		84EBA2C118E70C9100AC5AA5 /* symbol5-spark7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "symbol5-spark7@2x.png"; sourceTree = "<group>"; };
+		84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCHttpRequest.cpp; sourceTree = "<group>"; };
+		84FD4BFD18F37CEE006A17BA /* CCHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCHttpRequest.h; sourceTree = "<group>"; };
 		C30FB249186AC34900D12C9B /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
 		C30FB24A186AC34900D12C9B /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
 		C30FB24D186AC34900D12C9B /* ChartboostX_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostX_ios.mm; sourceTree = "<group>"; };
@@ -2993,6 +2996,16 @@
 			path = jordanmatchmania/Resources/Symbols/anim;
 			sourceTree = SOURCE_ROOT;
 		};
+		84FD4BFB18F37CEE006A17BA /* webservice */ = {
+			isa = PBXGroup;
+			children = (
+				84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */,
+				84FD4BFD18F37CEE006A17BA /* CCHttpRequest.h */,
+			);
+			name = webservice;
+			path = jordanmatchmania/classes/webservice;
+			sourceTree = SOURCE_ROOT;
+		};
 		C30FB248186AC34900D12C9B /* Chartboost */ = {
 			isa = PBXGroup;
 			children = (
@@ -4258,6 +4271,7 @@
 		C33DAFA31862B85B00D30D14 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				84FD4BFB18F37CEE006A17BA /* webservice */,
 				C30FB248186AC34900D12C9B /* Chartboost */,
 				C39B1A251869C3F800BF2440 /* ObjCCalls */,
 				C33DB85518630CF100D30D14 /* SDK */,
@@ -5514,6 +5528,7 @@
 				C33DAD661862B85600D30D14 /* AccelerometerSimulation.m in Sources */,
 				C33DAD681862B85600D30D14 /* platform.cpp in Sources */,
 				C33DAD811862B85700D30D14 /* CCScriptSupport.cpp in Sources */,
+				84FD4BFE18F37CEE006A17BA /* CCHttpRequest.cpp in Sources */,
 				C33DAD851862B85700D30D14 /* CCGLProgram.cpp in Sources */,
 				C33DAD881862B85700D30D14 /* ccGLStateCache.cpp in Sources */,
 				C33DAD9A1862B85700D30D14 /* CCShaderCache.cpp in Sources */,
