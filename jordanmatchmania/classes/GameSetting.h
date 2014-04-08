@@ -44,6 +44,8 @@ public:
     int         m_nGameScore;
     int         m_nCurrentLevel;
      
+    bool         m_user_new;
+    
     
     
     char        backgroundName[0x60];
@@ -63,6 +65,9 @@ public:
     void        setGameMode(GameMode nMode);
     GameMode    getGameMode();
 
+    
+    
+    
     void        setGameScore(int nScore);
     int         getGameScore();
 

@@ -18,6 +18,7 @@
 #include "Define.h"
 #include "JoinLayer.h"
 #include "CCHttpRequest.h"
+#include "WebserviceManager.h"
 
 using namespace cocos2d::extension;
 
@@ -305,14 +306,7 @@ void MainView::howToPlay(CCObject *pSender){
 
 void MainView::onClickFacebookButton(){
     
-    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
-    
-    std::string url = "http://www.baidu.com";
-    std::string postData = "key=val";
-    
-    requestor->addGetTask(url, this, callfuncND_selector(MainView::onHttpRequestCompleted));
-    requestor->addPostTask(url, postData, this, callfuncND_selector(MainView::onHttpRequestCompleted));
-    
+    WebserviceManager::sharedInstance()->postUser(1, "user1", "pass1", 1, 1, 40, 40, "tianyang19930221@hotmail.com", 1, this, callfuncND_selector(MainView::onHttpRequestCompleted));
 }
 
 void MainView::onClickGuestButton(){
@@ -330,6 +324,20 @@ void MainView::onHttpRequestCompleted(cocos2d::CCObject *pSender, void *data)
         if (response->succeed) {
             CCLog("Get Request Completed!");
             CCLog("Content: %s", response->responseData.c_str());
+            
+            if (atoi(response->responseData.c_str()) == 0) {
+                
+                
+                
+            }else{
+                
+                
+                
+            }
+            
+            CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, JoinLayer::scene()));
+
+            
         } else {
             CCLog("Get Error: %s", response->responseData.c_str());
         }

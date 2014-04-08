@@ -18,22 +18,20 @@ class WebserviceManager : public CCObject{
 public:
     static WebserviceManager* sharedInstance();
 
-    void postUser(int fbid, char* user_name, char *pass, int gender, int locationid, float lat, float lon, char* email, int deviceid);
-    void getUser(char* user_name, char *pass);
-    void getGameId(char* gamekey);
-    void postGamePlay(int userid, int score, int gameid);
-    void getAds(int userid, int gameid);
-    void postAdView(int userid, int adid, int gameid);
-    void getGpgid(char* gpgcode);
-    void postGpg(int userid, int gpgid);
-    void getCoupons(int userid, int gameid);
-    void postCoupons(int userid, int couponid, int gameid);
-    void postBrandlike(int userid, int gameid);
-    void postFriendInvite(int userid, int friendid, int gameid);
-    void postCouponShare(int userid, int friendid, int couponid, int gameid);
-    
-    void onHttpRequestCompleted(CCObject *pSender, void *data);
-    
+    void postUser(int fbid, char* user_name, char *pass, int gender, int locationid, float lat, float lon, char* email, int deviceid, cocos2d::CCObject *pTarget, SEL_CallFuncND pSelector);
+    void getUser(char* user_name, char *pass, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void getGameId(char* gamekey, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postGamePlay(int userid, int score, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void getAds(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postAdView(int userid, int adid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void getGpgid(char* gpgcode, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postGpg(int userid, int gpgid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void getCoupons(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postCoupons(int userid, int couponid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postBrandlike(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postFriendInvite(int userid, int friendid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+    void postCouponShare(int userid, int friendid, int couponid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector);
+
 };
 
 #endif

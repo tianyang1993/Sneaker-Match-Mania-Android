@@ -22,6 +22,9 @@ public:
   
     CCUserDefault *userDefaults;
     
+    bool        user_is_online;	
+    
+    
     int         selectedGameMode;
     int         currentLevel;
     int         currentScore;

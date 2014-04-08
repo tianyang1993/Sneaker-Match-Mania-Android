@@ -34,7 +34,7 @@ WebserviceManager* WebserviceManager::sharedInstance(){
 
 }
 
-void WebserviceManager::postUser(int fbid, char* user_name, char *pass, int gender, int locationid, float lat, float lon, char* email, int deviceid){
+void WebserviceManager::postUser(int fbid, char* user_name, char *pass, int gender, int locationid, float lat, float lon, char* email, int deviceid, cocos2d::CCObject *pTarget, SEL_CallFuncND pSelector){
     
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
@@ -43,10 +43,10 @@ void WebserviceManager::postUser(int fbid, char* user_name, char *pass, int gend
 
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::getUser(char* user_name, char *pass){
+void WebserviceManager::getUser(char* user_name, char *pass, CCObject *pTarget, SEL_CallFuncND pSelector){
 
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
@@ -55,11 +55,11 @@ void WebserviceManager::getUser(char* user_name, char *pass){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 
 }
 
-void WebserviceManager::getGameId(char* gamekey){
+void WebserviceManager::getGameId(char* gamekey, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -67,10 +67,10 @@ void WebserviceManager::getGameId(char* gamekey){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::postGamePlay(int userid, int score, int gameid){
+void WebserviceManager::postGamePlay(int userid, int score, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -78,10 +78,10 @@ void WebserviceManager::postGamePlay(int userid, int score, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::getAds(int userid, int gameid){
+void WebserviceManager::getAds(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -89,11 +89,11 @@ void WebserviceManager::getAds(int userid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
     
 }
 
-void WebserviceManager::postAdView(int userid, int adid, int gameid){
+void WebserviceManager::postAdView(int userid, int adid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -101,10 +101,10 @@ void WebserviceManager::postAdView(int userid, int adid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::getGpgid(char* gpgcode){
+void WebserviceManager::getGpgid(char* gpgcode, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -112,10 +112,10 @@ void WebserviceManager::getGpgid(char* gpgcode){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::postGpg(int userid, int gpgid){
+void WebserviceManager::postGpg(int userid, int gpgid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -123,11 +123,11 @@ void WebserviceManager::postGpg(int userid, int gpgid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
     
 }
 
-void WebserviceManager::getCoupons(int userid, int gameid){
+void WebserviceManager::getCoupons(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -135,10 +135,10 @@ void WebserviceManager::getCoupons(int userid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::postCoupons(int userid, int couponid, int gameid){
+void WebserviceManager::postCoupons(int userid, int couponid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -146,11 +146,11 @@ void WebserviceManager::postCoupons(int userid, int couponid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
     
 }
 
-void WebserviceManager::postBrandlike(int userid, int gameid){
+void WebserviceManager::postBrandlike(int userid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -158,10 +158,10 @@ void WebserviceManager::postBrandlike(int userid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::postFriendInvite(int userid, int friendid, int gameid){
+void WebserviceManager::postFriendInvite(int userid, int friendid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
  
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
@@ -170,10 +170,10 @@ void WebserviceManager::postFriendInvite(int userid, int friendid, int gameid){
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
-void WebserviceManager::postCouponShare(int userid, int friendid, int couponid, int gameid){
+void WebserviceManager::postCouponShare(int userid, int friendid, int couponid, int gameid, CCObject *pTarget, SEL_CallFuncND pSelector){
     CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
     
     char request[0x100] = {0};
@@ -181,40 +181,6 @@ void WebserviceManager::postCouponShare(int userid, int friendid, int couponid, 
     
     std::string url = request;
     
-    requestor->addGetTask(url, this, callfuncND_selector(WebserviceManager::onHttpRequestCompleted));
-}
-
-#pragma mark - Http Reqeust
-void WebserviceManager::onHttpRequestCompleted(cocos2d::CCObject *pSender, void *data)
-{
-    HttpResponsePacket *response = (HttpResponsePacket *)data;
-    
-    if (response->request->reqType == kHttpRequestGet) {
-        if (response->succeed) {
-            CCLog("Get Request Completed!");
-            CCLog("Content: %s", response->responseData.c_str());
-        } else {
-            CCLog("Get Error: %s", response->responseData.c_str());
-        }
-    } else if (response->request->reqType == kHttpRequestPost) {
-        if (response->succeed) {
-            CCLog("Post Request Completed!");
-            CCLog("Content: %s", response->responseData.c_str());
-        } else {
-            CCLog("Post Error: %s", response->responseData.c_str());
-        }
-    } else if (response->request->reqType == kHttpRequestDownloadFile) {
-        if (response->succeed) {
-            CCLog("Download Request Completed! Downloaded:");
-            
-            std::vector<std::string>::iterator iter;
-            for (iter = response->request->files.begin(); iter != response->request->files.end(); ++iter) {
-                std::string url = *iter;
-                CCLog("%s", url.c_str());
-            }
-        } else {
-            CCLog("Download Error: %s", response->responseData.c_str());
-        }
-    }
+    requestor->addGetTask(url, pTarget, pSelector);
 }
 
