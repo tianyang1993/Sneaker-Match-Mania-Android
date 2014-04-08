@@ -17,6 +17,9 @@
 #include "AnalyticX.h"
 #include "Define.h"
 #include "JoinLayer.h"
+#include "CCHttpRequest.h"
+
+using namespace cocos2d::extension;
 
 CCScene* MainView::scene(){
     
@@ -302,6 +305,14 @@ void MainView::howToPlay(CCObject *pSender){
 
 void MainView::onClickFacebookButton(){
     
+    CCHttpRequest *requestor = CCHttpRequest::sharedHttpRequest();
+    
+    std::string url = "http://www.baidu.com";
+    std::string postData = "key=val";
+    
+    requestor->addGetTask(url, this, callfuncND_selector(MainView::onHttpRequestCompleted));
+    requestor->addPostTask(url, postData, this, callfuncND_selector(MainView::onHttpRequestCompleted));
+    
 }
 
 void MainView::onClickGuestButton(){
@@ -309,6 +320,42 @@ void MainView::onClickGuestButton(){
     CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5f, JoinLayer::scene()));
 
 }
+
+#pragma mark - Http Reqeust
+void MainView::onHttpRequestCompleted(cocos2d::CCObject *pSender, void *data)
+{
+    HttpResponsePacket *response = (HttpResponsePacket *)data;
+    
+    if (response->request->reqType == kHttpRequestGet) {
+        if (response->succeed) {
+            CCLog("Get Request Completed!");
+            CCLog("Content: %s", response->responseData.c_str());
+        } else {
+            CCLog("Get Error: %s", response->responseData.c_str());
+        }
+    } else if (response->request->reqType == kHttpRequestPost) {
+        if (response->succeed) {
+            CCLog("Post Request Completed!");
+            CCLog("Content: %s", response->responseData.c_str());
+        } else {
+            CCLog("Post Error: %s", response->responseData.c_str());
+        }
+    } else if (response->request->reqType == kHttpRequestDownloadFile) {
+        if (response->succeed) {
+            CCLog("Download Request Completed! Downloaded:");
+            
+            std::vector<std::string>::iterator iter;
+            for (iter = response->request->files.begin(); iter != response->request->files.end(); ++iter) {
+                std::string url = *iter;
+                CCLog("%s", url.c_str());
+            }
+        } else {
+            CCLog("Download Error: %s", response->responseData.c_str());
+        }
+    }
+}
+
+
 
 # pragma mark - ChartBoost SDK Integration
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\//\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/

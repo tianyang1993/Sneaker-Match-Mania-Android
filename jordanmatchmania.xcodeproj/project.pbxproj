@@ -430,6 +430,7 @@
 		84EBA3E018E70C9100AC5AA5 /* symbol5-spark6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EBA2C018E70C9100AC5AA5 /* symbol5-spark6@2x.png */; };
 		84EBA3E118E70C9100AC5AA5 /* symbol5-spark7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EBA2C118E70C9100AC5AA5 /* symbol5-spark7@2x.png */; };
 		84FD4BFE18F37CEE006A17BA /* CCHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */; };
+		84FD4C0318F393E5006A17BA /* WebserviceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84FD4C0218F393E5006A17BA /* WebserviceManager.cpp */; };
 		C30FB254186AC34900D12C9B /* ChartboostX_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C30FB24D186AC34900D12C9B /* ChartboostX_ios.mm */; };
 		C30FB256186AC34900D12C9B /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C30FB250186AC34900D12C9B /* libChartboost.a */; };
 		C33DAC031862B85400D30D14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33DAC021862B85400D30D14 /* QuartzCore.framework */; };
@@ -1438,6 +1439,8 @@
 		84EBA2C118E70C9100AC5AA5 /* symbol5-spark7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "symbol5-spark7@2x.png"; sourceTree = "<group>"; };
 		84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCHttpRequest.cpp; sourceTree = "<group>"; };
 		84FD4BFD18F37CEE006A17BA /* CCHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCHttpRequest.h; sourceTree = "<group>"; };
+		84FD4C0018F38BEB006A17BA /* WebserviceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebserviceManager.h; sourceTree = "<group>"; };
+		84FD4C0218F393E5006A17BA /* WebserviceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebserviceManager.cpp; sourceTree = "<group>"; };
 		C30FB249186AC34900D12C9B /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
 		C30FB24A186AC34900D12C9B /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
 		C30FB24D186AC34900D12C9B /* ChartboostX_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostX_ios.mm; sourceTree = "<group>"; };
@@ -3001,6 +3004,8 @@
 			children = (
 				84FD4BFC18F37CEE006A17BA /* CCHttpRequest.cpp */,
 				84FD4BFD18F37CEE006A17BA /* CCHttpRequest.h */,
+				84FD4C0018F38BEB006A17BA /* WebserviceManager.h */,
+				84FD4C0218F393E5006A17BA /* WebserviceManager.cpp */,
 			);
 			name = webservice;
 			path = jordanmatchmania/classes/webservice;
@@ -5533,6 +5538,7 @@
 				C33DAD881862B85700D30D14 /* ccGLStateCache.cpp in Sources */,
 				C33DAD9A1862B85700D30D14 /* CCShaderCache.cpp in Sources */,
 				C33DAD9E1862B85700D30D14 /* ccShaders.cpp in Sources */,
+				84FD4C0318F393E5006A17BA /* WebserviceManager.cpp in Sources */,
 				C33DADA21862B85700D30D14 /* CCAnimation.cpp in Sources */,
 				C33DADA51862B85700D30D14 /* CCAnimationCache.cpp in Sources */,
 				C33DADA81862B85700D30D14 /* CCSprite.cpp in Sources */,
